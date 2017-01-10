@@ -16,9 +16,12 @@
 		5517CA771E242A4800F3F8F5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5517CA751E242A4800F3F8F5 /* LaunchScreen.storyboard */; };
 		5517CA821E242A4800F3F8F5 /* programmeerprojectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5517CA811E242A4800F3F8F5 /* programmeerprojectTests.swift */; };
 		5517CA8D1E242A4800F3F8F5 /* programmeerprojectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5517CA8C1E242A4800F3F8F5 /* programmeerprojectUITests.swift */; };
+		5532B50D1E250B1500FE84CA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5532B50C1E250B1500FE84CA /* User.swift */; };
 		55FDAE1D1E24E09300A172CF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 55FDAE1C1E24E09300A172CF /* GoogleService-Info.plist */; };
 		55FDAE1F1E24E5E900A172CF /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FDAE1E1E24E5E900A172CF /* SignupViewController.swift */; };
 		55FDAE211E24F47600A172CF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FDAE201E24F47600A172CF /* LoginViewController.swift */; };
+		55FDAE231E2507C400A172CF /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FDAE221E2507C400A172CF /* UserCell.swift */; };
+		55FDAE251E25087700A172CF /* UsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FDAE241E25087700A172CF /* UsersViewController.swift */; };
 		83FDEFE59495B9EA24FF5F98 /* Pods_programmeerprojectUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97A78D6FC5A05C9F723B44E5 /* Pods_programmeerprojectUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -55,9 +58,12 @@
 		5517CA881E242A4800F3F8F5 /* programmeerprojectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = programmeerprojectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5517CA8C1E242A4800F3F8F5 /* programmeerprojectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = programmeerprojectUITests.swift; sourceTree = "<group>"; };
 		5517CA8E1E242A4900F3F8F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5532B50C1E250B1500FE84CA /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		55FDAE1C1E24E09300A172CF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		55FDAE1E1E24E5E900A172CF /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		55FDAE201E24F47600A172CF /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		55FDAE221E2507C400A172CF /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		55FDAE241E25087700A172CF /* UsersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersViewController.swift; sourceTree = "<group>"; };
 		6182565A490C68E5B9ADBCCD /* Pods_programmeerprojectTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_programmeerprojectTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8430593D4148ED26864B76B9 /* Pods-programmeerprojectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-programmeerprojectTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-programmeerprojectTests/Pods-programmeerprojectTests.debug.xcconfig"; sourceTree = "<group>"; };
 		88C873C7915833AC82D1711B /* Pods-programmeerprojectTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-programmeerprojectTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-programmeerprojectTests/Pods-programmeerprojectTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -130,6 +136,9 @@
 		5517CA6B1E242A4800F3F8F5 /* programmeerproject */ = {
 			isa = PBXGroup;
 			children = (
+				5532B50B1E250AFD00FE84CA /* Objects */,
+				5532B50A1E250AE800FE84CA /* Custom Cell */,
+				5532B5091E250ACA00FE84CA /* View Controllers */,
 				5517CA6C1E242A4800F3F8F5 /* AppDelegate.swift */,
 				5517CA6E1E242A4800F3F8F5 /* ViewController.swift */,
 				5517CA701E242A4800F3F8F5 /* Main.storyboard */,
@@ -137,8 +146,6 @@
 				5517CA751E242A4800F3F8F5 /* LaunchScreen.storyboard */,
 				5517CA781E242A4800F3F8F5 /* Info.plist */,
 				55FDAE1C1E24E09300A172CF /* GoogleService-Info.plist */,
-				55FDAE1E1E24E5E900A172CF /* SignupViewController.swift */,
-				55FDAE201E24F47600A172CF /* LoginViewController.swift */,
 			);
 			path = programmeerproject;
 			sourceTree = "<group>";
@@ -159,6 +166,32 @@
 				5517CA8E1E242A4900F3F8F5 /* Info.plist */,
 			);
 			path = programmeerprojectUITests;
+			sourceTree = "<group>";
+		};
+		5532B5091E250ACA00FE84CA /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				55FDAE1E1E24E5E900A172CF /* SignupViewController.swift */,
+				55FDAE201E24F47600A172CF /* LoginViewController.swift */,
+				55FDAE241E25087700A172CF /* UsersViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		5532B50A1E250AE800FE84CA /* Custom Cell */ = {
+			isa = PBXGroup;
+			children = (
+				55FDAE221E2507C400A172CF /* UserCell.swift */,
+			);
+			name = "Custom Cell";
+			sourceTree = "<group>";
+		};
+		5532B50B1E250AFD00FE84CA /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				5532B50C1E250B1500FE84CA /* User.swift */,
+			);
+			name = Objects;
 			sourceTree = "<group>";
 		};
 		ECBC9A8B2372B4D09D8AFA22 /* Pods */ = {
@@ -458,8 +491,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				55FDAE211E24F47600A172CF /* LoginViewController.swift in Sources */,
+				55FDAE251E25087700A172CF /* UsersViewController.swift in Sources */,
 				55FDAE1F1E24E5E900A172CF /* SignupViewController.swift in Sources */,
 				5517CA6F1E242A4800F3F8F5 /* ViewController.swift in Sources */,
+				5532B50D1E250B1500FE84CA /* User.swift in Sources */,
+				55FDAE231E2507C400A172CF /* UserCell.swift in Sources */,
 				5517CA6D1E242A4800F3F8F5 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
