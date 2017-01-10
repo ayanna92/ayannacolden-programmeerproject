@@ -105,6 +105,8 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
             print("Password does not match")
         }
         
+        // check if commit works with readme added
+        
         
         
         
