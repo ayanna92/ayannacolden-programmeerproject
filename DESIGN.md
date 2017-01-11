@@ -28,4 +28,4 @@ List of Viewcontrollers
   * ProfileVC
       Users profile, showing name and profile picture, links to chatroom with button
   
-  ![ScreenShot](https://raw.github.com/ayanna92/ayannacolden-programmeerproject/master/doc/homepage:chatroom.png)
+  ![ScreenShot](https://raw.github.com/ayanna92/ayannacolden-programmeerproject/master/doc/IMG_6375.JPG)
