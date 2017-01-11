@@ -10,12 +10,13 @@
 		0EDCA91C198A845A82FDDF5E /* Pods_programmeerprojectTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6182565A490C68E5B9ADBCCD /* Pods_programmeerprojectTests.framework */; };
 		12C5D7AA54D111228635B05A /* Pods_programmeerproject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DCDF8E332085DEC68E869C1 /* Pods_programmeerproject.framework */; };
 		5517CA6D1E242A4800F3F8F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5517CA6C1E242A4800F3F8F5 /* AppDelegate.swift */; };
-		5517CA6F1E242A4800F3F8F5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5517CA6E1E242A4800F3F8F5 /* ViewController.swift */; };
 		5517CA721E242A4800F3F8F5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5517CA701E242A4800F3F8F5 /* Main.storyboard */; };
 		5517CA741E242A4800F3F8F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5517CA731E242A4800F3F8F5 /* Assets.xcassets */; };
 		5517CA771E242A4800F3F8F5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5517CA751E242A4800F3F8F5 /* LaunchScreen.storyboard */; };
 		5517CA821E242A4800F3F8F5 /* programmeerprojectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5517CA811E242A4800F3F8F5 /* programmeerprojectTests.swift */; };
 		5517CA8D1E242A4800F3F8F5 /* programmeerprojectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5517CA8C1E242A4800F3F8F5 /* programmeerprojectUITests.swift */; };
+		55275CD51E2633F800456990 /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55275CD41E2633F800456990 /* UploadViewController.swift */; };
+		55275CD71E26680900456990 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55275CD61E26680900456990 /* ChatViewController.swift */; };
 		5532B50D1E250B1500FE84CA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5532B50C1E250B1500FE84CA /* User.swift */; };
 		55FDAE1D1E24E09300A172CF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 55FDAE1C1E24E09300A172CF /* GoogleService-Info.plist */; };
 		55FDAE1F1E24E5E900A172CF /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FDAE1E1E24E5E900A172CF /* SignupViewController.swift */; };
@@ -47,7 +48,6 @@
 		4CBEEF8B22F38A0A27F5FC47 /* Pods-programmeerprojectUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-programmeerprojectUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-programmeerprojectUITests/Pods-programmeerprojectUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		5517CA691E242A4800F3F8F5 /* programmeerproject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = programmeerproject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5517CA6C1E242A4800F3F8F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5517CA6E1E242A4800F3F8F5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		5517CA711E242A4800F3F8F5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5517CA731E242A4800F3F8F5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5517CA761E242A4800F3F8F5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -58,6 +58,8 @@
 		5517CA881E242A4800F3F8F5 /* programmeerprojectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = programmeerprojectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5517CA8C1E242A4800F3F8F5 /* programmeerprojectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = programmeerprojectUITests.swift; sourceTree = "<group>"; };
 		5517CA8E1E242A4900F3F8F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		55275CD41E2633F800456990 /* UploadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
+		55275CD61E26680900456990 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		5532B50C1E250B1500FE84CA /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		55FDAE1C1E24E09300A172CF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		55FDAE1E1E24E5E900A172CF /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
@@ -140,7 +142,6 @@
 				5532B50A1E250AE800FE84CA /* Custom Cell */,
 				5532B5091E250ACA00FE84CA /* View Controllers */,
 				5517CA6C1E242A4800F3F8F5 /* AppDelegate.swift */,
-				5517CA6E1E242A4800F3F8F5 /* ViewController.swift */,
 				5517CA701E242A4800F3F8F5 /* Main.storyboard */,
 				5517CA731E242A4800F3F8F5 /* Assets.xcassets */,
 				5517CA751E242A4800F3F8F5 /* LaunchScreen.storyboard */,
@@ -174,6 +175,8 @@
 				55FDAE1E1E24E5E900A172CF /* SignupViewController.swift */,
 				55FDAE201E24F47600A172CF /* LoginViewController.swift */,
 				55FDAE241E25087700A172CF /* UsersViewController.swift */,
+				55275CD41E2633F800456990 /* UploadViewController.swift */,
+				55275CD61E26680900456990 /* ChatViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -491,9 +494,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				55FDAE211E24F47600A172CF /* LoginViewController.swift in Sources */,
+				55275CD51E2633F800456990 /* UploadViewController.swift in Sources */,
+				55275CD71E26680900456990 /* ChatViewController.swift in Sources */,
 				55FDAE251E25087700A172CF /* UsersViewController.swift in Sources */,
 				55FDAE1F1E24E5E900A172CF /* SignupViewController.swift in Sources */,
-				5517CA6F1E242A4800F3F8F5 /* ViewController.swift in Sources */,
 				5532B50D1E250B1500FE84CA /* User.swift in Sources */,
 				55FDAE231E2507C400A172CF /* UserCell.swift in Sources */,
 				5517CA6D1E242A4800F3F8F5 /* AppDelegate.swift in Sources */,

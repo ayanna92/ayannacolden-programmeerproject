@@ -33,10 +33,12 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
         ref = FIRDatabase.database().reference()
         userStorage = storage.child("users")
     }
-
+    
+    
     @IBAction func selectImagePressed(_ sender: Any) {
         picker.allowsEditing = true
         picker.sourceType = .photoLibrary
+        
         
         present(picker, animated: true, completion: nil)
     }
