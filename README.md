@@ -39,5 +39,5 @@ Imagine having an embarrassing photo being taken of you on a night out, or durin
 
 
 ### Visualization idea examples
-![ScreenShot](https://raw.github.com/ayanna92/ayannacolden-finalproject/master/doc/Login:Register.png)
-![ScreenShot](https://raw.github.com/ayanna92/ayannacolden-finalproject/master/doc/homepage:chatroom.png)
+![ScreenShot](https://raw.github.com/ayanna92/ayannacolden-programmeerproject/master/doc/Login:Register.png)
+![ScreenShot](https://raw.github.com/ayanna92/ayannacolden-programmeerproject/master/doc/homepage:chatroom.png)
