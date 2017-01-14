@@ -1,5 +1,6 @@
 # Ayanna Colden Process Book
 
+# Week 1
 ## Day 1 (Mon):
 * Wrote proposal for M.A.D. app
 * Watched Instagram like app tutorials and followed for firebase login/signup functionality and following users
@@ -23,3 +24,5 @@
 ## Day 6 (Sat):
 
 ## Day 7 (Sun):
+
+# Week 2
