@@ -22,6 +22,7 @@
 * having hard time figuring out how to read followers from firebase, so I can have a page where only followed users are listed to chat with
 
 ## Day 6 (Sat):
+* Stuck on trying to get only followed users displayed in tableview, trying different things
 
 ## Day 7 (Sun):
 
