@@ -93,6 +93,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
             if !isFollower {
                 let following = ["following/\(key)" : self.user[indexPath.row].userID]
+                print("following: \(following)")
                 let followers = ["followers/\(key)" : uid]
                 
                 ref.child("users").child(uid).updateChildValues(following)

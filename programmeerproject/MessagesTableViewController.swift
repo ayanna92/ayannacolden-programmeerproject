@@ -10,10 +10,10 @@ import UIKit
 import Firebase
 
 class MessagesTableViewController: UITableViewController {
-    @IBOutlet weak var navBar: UINavigationBar!
-    @IBOutlet weak var navTitle: UINavigationItem!
+
 
     
+    @IBOutlet var navTitle: UINavigationItem!
     let cellId = "cellId"
 
     override func viewDidLoad() {
@@ -61,8 +61,8 @@ class MessagesTableViewController: UITableViewController {
     @IBAction func newMessagePressed(_ sender: Any) {
         let newMessageController = NewMessageController()
         newMessageController.messagesController = self
-        let navController = UINavigationController(rootViewController: newMessageController)
-        present(navController, animated: true, completion: nil)
+        //let navController = UINavigationController(rootViewController: newMessageController)
+        present(newMessageController, animated: true, completion: nil)
     }
     
     @IBAction func logOutPressed(_ sender: Any) {
@@ -106,7 +106,7 @@ class MessagesTableViewController: UITableViewController {
     }
 
     func showChatControllerForUser(_ user: User) {
-        let chatLogController = ChatLogController(coder: UICollectionViewDelegateFlowLayout)
+        let chatLogController = ChatLogController()
         chatLogController.user = user
         navigationController?.pushViewController(chatLogController, animated: true)
     }

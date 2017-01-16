@@ -14,6 +14,7 @@ class MessageCell: UITableViewCell {
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet var timeLabel: UILabel!
 
+    @IBOutlet var nameLabel: UILabel!
     
     var message: Message? {
         didSet {

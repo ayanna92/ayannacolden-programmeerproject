@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="9Aw-HU-HGH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -288,7 +288,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Chatlog"/>
                                 <connections>
-                                    <segue destination="s8y-G8-zRD" kind="show" id="eF0-aY-biB"/>
+                                    <segue destination="6TE-y7-1MH" kind="show" id="zAd-Ge-tha"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -307,7 +307,7 @@
         <!--Messages Table View Controller-->
         <scene sceneID="wga-1T-0P0">
             <objects>
-                <tableViewController id="9Aw-HU-HGH" customClass="MessagesTableViewController" customModule="programmeerproject" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="9Aw-HU-HGH" customClass="MessagesTableViewController" customModule="programmeerproject" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="72" sectionHeaderHeight="28" sectionFooterHeight="28" id="Wnp-vb-5g9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -339,7 +339,7 @@
                                 <rect key="frame" x="0.0" y="72" width="375" height="72"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JeR-n2-phD" id="DWN-M8-CGU">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="71"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bfg-IT-bBq">
@@ -358,6 +358,7 @@
                                 <connections>
                                     <outlet property="profileImageView" destination="bfg-IT-bBq" id="CZz-mp-brY"/>
                                     <outlet property="timeLabel" destination="KIi-QD-63h" id="cgd-Rc-yXf"/>
+                                    <segue destination="s8y-G8-zRD" kind="show" id="V7m-Qh-1Wo"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -368,18 +369,76 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="o39-P6-I4D"/>
                     <connections>
-                        <outlet property="navBar" destination="xwq-cR-mRx" id="ziA-y0-dNS"/>
-                        <outlet property="navTitle" destination="sF0-OL-MEo" id="OXx-2Q-qnB"/>
+                        <outlet property="navTitle" destination="sF0-OL-MEo" id="cz7-Eq-EDe"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Csp-E9-Hcr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2596" y="859.52023988005999"/>
+            <point key="canvasLocation" x="1678" y="860"/>
+        </scene>
+        <!--New Message Controller-->
+        <scene sceneID="ueK-dg-RbE">
+            <objects>
+                <tableViewController storyboardIdentifier="newMessage" useStoryboardIdentifierAsRestorationIdentifier="YES" id="6TE-y7-1MH" customClass="NewMessageController" customModule="programmeerproject" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="72" sectionHeaderHeight="28" sectionFooterHeight="28" id="SdE-vm-KtA">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <navigationBar key="tableHeaderView" contentMode="scaleToFill" id="lVr-Hi-kVZ">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <items>
+                                <navigationItem id="Iwf-eP-sC4">
+                                    <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="BXY-wJ-JL3">
+                                        <connections>
+                                            <action selector="cancelPressed:" destination="6TE-y7-1MH" id="2R8-5A-Q5H"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </navigationItem>
+                            </items>
+                        </navigationBar>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="userCell" id="Cvu-f9-Uzm" customClass="UserCell" customModule="programmeerproject" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="72" width="375" height="72"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Cvu-f9-Uzm" id="QTd-LT-fRF">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="71"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5i0-sr-6wa">
+                                            <rect key="frame" x="8" y="0.0" width="75" height="71"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Full name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2uK-sN-FSt">
+                                            <rect key="frame" x="91" y="25" width="181" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="nameLabel" destination="2uK-sN-FSt" id="dcn-yd-MKr"/>
+                                    <outlet property="userImage" destination="5i0-sr-6wa" id="Q5L-qH-RWr"/>
+                                    <segue destination="s8y-G8-zRD" kind="show" id="tMv-Wd-wOY"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="6TE-y7-1MH" id="6cN-Yf-E5b"/>
+                            <outlet property="delegate" destination="6TE-y7-1MH" id="3Pj-jV-FgY"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1xS-qn-ll8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2517.5999999999999" y="855.9220389805098"/>
         </scene>
         <!--Chat Log Controller-->
         <scene sceneID="SY4-C0-qhT">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="s8y-G8-zRD" customClass="ChatLogController" customModule="programmeerproject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="chatLog" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="s8y-G8-zRD" customClass="ChatLogController" customModule="programmeerproject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="pNy-QX-dpr"/>
                         <viewControllerLayoutGuide type="bottom" id="cfZ-0R-yoD"/>
@@ -423,7 +482,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="kNm-gy-cLd">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="kNm-gy-cLd" customClass="ChatMessageCell" customModule="programmeerproject" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -500,7 +559,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9uc-ya-WA9" id="1eD-PO-zjF">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -529,5 +588,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="A7S-XQ-ODR"/>
+        <segue reference="tMv-Wd-wOY"/>
     </inferredMetricsTieBreakers>
 </document>

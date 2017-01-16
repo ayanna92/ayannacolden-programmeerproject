@@ -13,5 +13,6 @@ class User: NSObject {
     var userID: String!
     var fullName: String!
     var imagePath: String!
+    var following: [String: AnyObject]!
     
 }
