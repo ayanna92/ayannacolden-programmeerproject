@@ -25,5 +25,8 @@
 * Stuck on trying to get only followed users displayed in tableview, trying different things
 
 ## Day 7 (Sun):
+* Took a break from apps for the day
 
 # Week 2
+## Day 8 (Mon):
+* Fixed following user display problem, thanks to groupmate suggesting dispatch main async! SO HAPPY
