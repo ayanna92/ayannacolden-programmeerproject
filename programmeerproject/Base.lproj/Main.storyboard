@@ -402,7 +402,7 @@
                                 <rect key="frame" x="0.0" y="72" width="375" height="72"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Cvu-f9-Uzm" id="QTd-LT-fRF">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="71"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5i0-sr-6wa">
@@ -421,7 +421,7 @@
                                 <connections>
                                     <outlet property="nameLabel" destination="2uK-sN-FSt" id="dcn-yd-MKr"/>
                                     <outlet property="userImage" destination="5i0-sr-6wa" id="Q5L-qH-RWr"/>
-                                    <segue destination="s8y-G8-zRD" kind="show" id="tMv-Wd-wOY"/>
+                                    <segue destination="s8y-G8-zRD" kind="show" identifier="userMessage" id="tMv-Wd-wOY"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -470,6 +470,9 @@
                                 <rect key="frame" x="313" y="85" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Send"/>
+                                <connections>
+                                    <action selector="sendPressed:" destination="s8y-G8-zRD" eventType="touchUpInside" id="IMr-JA-7Gj"/>
+                                </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="uAF-vb-4oW">
                                 <rect key="frame" x="0.0" y="123" width="375" height="544"/>
@@ -496,7 +499,13 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
-                                    <navigationItem title="Title" id="GV7-ba-OnG"/>
+                                    <navigationItem title="Title" id="GV7-ba-OnG">
+                                        <barButtonItem key="leftBarButtonItem" title="Back" id="Uud-2s-DJ6">
+                                            <connections>
+                                                <segue destination="6TE-y7-1MH" kind="show" id="6M7-re-I16"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
                                 </items>
                             </navigationBar>
                         </subviews>
@@ -588,6 +597,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="A7S-XQ-ODR"/>
+        <segue reference="6M7-re-I16"/>
         <segue reference="tMv-Wd-wOY"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -18,13 +18,14 @@ class ChatLogController: UIViewController, UICollectionViewDelegateFlowLayout, U
     
     let cellId = "cellId"
     
-    var user: User? {
-        didSet {
-            navigationItem.title = user?.fullName
-            
-            observeMessages()
-        }
-    }
+    var user: User?
+//    {
+//        didSet {
+//            navBar.title = user?.fullName
+//            
+//            observeMessages()
+//        }
+// }
   
     
     var messages = [Message]()
@@ -74,7 +75,13 @@ class ChatLogController: UIViewController, UICollectionViewDelegateFlowLayout, U
         collectionView?.backgroundColor = UIColor.white
         collectionView?.register(ChatMessageCell.self, forCellWithReuseIdentifier: cellId)
         
+        observeMessages()
+        
         //setupInputComponents()
+    }
+    
+    @IBAction func sendPressed(_ sender: Any) {
+        handleSend()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -97,6 +104,7 @@ class ChatLogController: UIViewController, UICollectionViewDelegateFlowLayout, U
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         collectionView?.collectionViewLayout.invalidateLayout()
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
