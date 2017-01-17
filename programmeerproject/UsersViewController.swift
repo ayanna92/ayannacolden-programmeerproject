@@ -34,7 +34,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 if let uid = value["uid"] as? String {
                     if uid != FIRAuth.auth()!.currentUser!.uid {
                         let userToShow = User()
-                        if let fullName = value["full name"] as? String, let imagePath = value["urlToImage"] as? String {
+                        if let fullName = value["fullname"] as? String, let imagePath = value["urlToImage"] as? String {
                             userToShow.fullName = fullName
                             userToShow.imagePath = imagePath
                             userToShow.userID = uid

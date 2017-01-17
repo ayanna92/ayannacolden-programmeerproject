@@ -182,7 +182,7 @@ class MessagesController: UITableViewController {
             }
             
             let user = UserMessages()
-            user.id = chatPartnerId
+            user.uid = chatPartnerId
             user.setValuesForKeys(dictionary)
             self.showChatControllerForUser(user)
             
@@ -244,7 +244,7 @@ class MessagesController: UITableViewController {
         profileImageView.layer.cornerRadius = 20
         profileImageView.clipsToBounds = true
         if let profileImageUrl = user.urlToImage {
-            profileImageUrl.loadImageUsingCacheWithUrlString(profileImageUrl)
+            profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
         }
         
         containerView.addSubview(profileImageView)
@@ -259,7 +259,7 @@ class MessagesController: UITableViewController {
         let nameLabel = UILabel()
         
         containerView.addSubview(nameLabel)
-        nameLabel.text = user.name
+        nameLabel.text = user.fullname
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         //need x,y,width,height anchors
         nameLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 8).isActive = true

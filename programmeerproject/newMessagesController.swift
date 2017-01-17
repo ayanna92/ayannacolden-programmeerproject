@@ -20,7 +20,7 @@ class NewMessagesController: UITableViewController {
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
         
-        tableView.register(UserCell.self, forCellReuseIdentifier: cellId)
+        tableView.register(UserMessageCell.self, forCellReuseIdentifier: cellId)
         
         fetchUser()
     }
@@ -30,7 +30,7 @@ class NewMessagesController: UITableViewController {
             
             if let dictionary = snapshot.value as? [String: AnyObject] {
                 let user = UserMessages()
-                user.id = snapshot.key
+                user.uid = snapshot.key
                 
                 //if you use this setter, your app will crash if your class properties don't exactly match up with the firebase dictionary keys
                 user.setValuesForKeys(dictionary)
@@ -59,7 +59,7 @@ class NewMessagesController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! UserMessageCell
         
         let user = users[(indexPath as NSIndexPath).row]
-        cell.textLabel?.text = user.name
+        cell.textLabel?.text = user.fullname
         cell.detailTextLabel?.text = user.email
         
         if let profileImageUrl = user.urlToImage {

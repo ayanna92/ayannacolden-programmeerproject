@@ -9,9 +9,11 @@
 import UIKit
 
 class UserMessages: NSObject {
-    var id: String?
-    var name: String?
+    var uid: String?
+    var fullname: String?
     var email: String?
     var urlToImage: String?
+    var following: [String: AnyObject]!
+    var followers: [String: AnyObject]!
 }
 

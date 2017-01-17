@@ -86,7 +86,7 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
                             
                             if let url = url {
                                 let userInfo: [String: Any] = ["uid": user.uid,
-                                                               "full name": self.nameField.text!,
+                                                               "fullname": self.nameField.text!,
                                                                "urlToImage": url.absoluteString]
                                 
                                 // Assign user to firebase.

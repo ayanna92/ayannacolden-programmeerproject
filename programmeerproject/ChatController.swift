@@ -15,7 +15,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     var user: UserMessages? {
         didSet {
-            navigationItem.title = user?.name
+            navigationItem.title = user?.fullname
             
             observeMessages()
         }
@@ -24,7 +24,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     var messages = [Message]()
     
     func observeMessages() {
-        guard let uid = FIRAuth.auth()?.currentUser?.uid, let toId = user?.id else {
+        guard let uid = FIRAuth.auth()?.currentUser?.uid, let toId = user?.uid else {
             return
         }
         
@@ -127,7 +127,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         }
         
         uploadTask.observe(.success) { (snapshot) in
-            self.navigationItem.title = self.user?.name
+            self.navigationItem.title = self.user?.fullname
         }
     }
     
@@ -349,7 +349,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     fileprivate func sendMessageWithProperties(_ properties: [String: AnyObject]) {
         let ref = FIRDatabase.database().reference().child("messages")
         let childRef = ref.childByAutoId()
-        let toId = user!.id!
+        let toId = user!.uid!
         let fromId = FIRAuth.auth()!.currentUser!.uid
         let timestamp = NSNumber(value: Int(Date().timeIntervalSince1970))
         
