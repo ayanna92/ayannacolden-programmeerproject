@@ -33,3 +33,4 @@
 * continued trying to make chat work, implementing different method that I found on firebase website themselves. Having a hard time figuring out how to make the chat one on one, rather than all users seeing the same chat. Also having problems retrieving information from segue, which I appear to be send properly so I have no clue why.
 
 ## Day 9 (Tue):
+* WORKING CHAT, still suuper buggy and I have a lot of file cleaning up to do, and rid of viewcontrollers I'm not using. BUT my chat is functioning, and I'm very happy with this development. 
