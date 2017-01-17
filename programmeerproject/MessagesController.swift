@@ -43,7 +43,7 @@ class MessagesController: UITableViewController {
         
         checkIfUserIsLoggedIn()
         
-        tableView.register(UserCell.self, forCellReuseIdentifier: cellId)
+        tableView.register(UserMessageCell.self, forCellReuseIdentifier: cellId)
         
         //        observeMessages()
         

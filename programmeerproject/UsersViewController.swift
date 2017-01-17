@@ -15,6 +15,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var tableview: UITableView!
 
     var user = [User]()
+    var userMessages = [UserMessages]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,16 +30,16 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
         ref.child("users").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
             
             let users = snapshot.value as! [String : AnyObject]
-            self.user.removeAll()
+            self.userMessages.removeAll()
             for (_, value) in users {
                 if let uid = value["uid"] as? String {
                     if uid != FIRAuth.auth()!.currentUser!.uid {
-                        let userToShow = User()
+                        let userToShow = UserMessages()
                         if let fullName = value["fullname"] as? String, let imagePath = value["urlToImage"] as? String {
-                            userToShow.fullName = fullName
-                            userToShow.imagePath = imagePath
-                            userToShow.userID = uid
-                            self.user.append(userToShow)
+                            userToShow.fullname = fullName
+                            userToShow.urlToImage = imagePath
+                            userToShow.uid = uid
+                            self.userMessages.append(userToShow)
                         }
                     }
                 }
@@ -56,16 +57,16 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableview.dequeueReusableCell(withIdentifier: "userCell", for: indexPath) as! UserCell
         
-        cell.nameLabel.text = self.user[indexPath.row].fullName
-        cell.userID = self.user[indexPath.row].userID
-        cell.userImage.downloadImage(from: self.user[indexPath.row].imagePath!)
+        cell.nameLabel.text = self.userMessages[indexPath.row].fullname
+        cell.userID = self.userMessages[indexPath.row].uid
+        cell.userImage.downloadImage(from: self.userMessages[indexPath.row].urlToImage!)
         checkFollowing(indexPath: indexPath)
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return user.count ?? 0
+        return userMessages.count ?? 0
     }
     
     
@@ -81,23 +82,23 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
             if let following = snapshot.value as? [String : AnyObject] {
                 for (ke, value) in following {
-                    if value as! String == self.user[indexPath.row].userID {
+                    if value as! String == self.userMessages[indexPath.row].uid {
                         isFollower = true
                         
                         ref.child("users").child(uid).child("following/\(ke)").removeValue()
-                        ref.child("users").child(self.user[indexPath.row].userID).child("followers/\(ke)").removeValue()
+                        ref.child("users").child(self.userMessages[indexPath.row].uid!).child("followers/\(ke)").removeValue()
                         
                         self.tableview.cellForRow(at: indexPath)?.accessoryType = .none
                     }
                 }
             }
             if !isFollower {
-                let following = ["following/\(key)" : self.user[indexPath.row].userID]
+                let following = ["following/\(key)" : self.userMessages[indexPath.row].uid]
                 print("following: \(following)")
                 let followers = ["followers/\(key)" : uid]
                 
                 ref.child("users").child(uid).updateChildValues(following)
-                ref.child("users").child(self.user[indexPath.row].userID).updateChildValues(followers)
+                ref.child("users").child(self.userMessages[indexPath.row].uid!).updateChildValues(followers)
                 
                 self.tableview.cellForRow(at: indexPath)?.accessoryType = .checkmark
             }
@@ -115,7 +116,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
             if let following = snapshot.value as? [String : AnyObject] {
                 for (_, value) in following {
-                    if value as! String == self.user[indexPath.row].userID {
+                    if value as! String == self.userMessages[indexPath.row].uid {
                         self.tableview.cellForRow(at: indexPath)?.accessoryType = .checkmark
                     }
                 }
