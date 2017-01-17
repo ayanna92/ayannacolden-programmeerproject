@@ -43,6 +43,12 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         self.present(picker, animated: true, completion: nil)
     }
 
+    @IBAction func chatLogPressed(_ sender: Any) {
+        let messagesController = MessagesController()
+        let navController = UINavigationController(rootViewController: messagesController)
+        present(navController, animated: true, completion: nil)
+    }
+    
     @IBAction func postPressed(_ sender: Any) {
         
         AppDelegate.instance().showActivityIndicator()

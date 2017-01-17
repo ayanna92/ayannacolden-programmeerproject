@@ -46,7 +46,7 @@ class ChatLogController: UIViewController, UICollectionViewDelegateFlowLayout, U
                     return
                 }
                 
-                let message = Message()
+                let message = Message(dictionary: dictionary)
                 //potential of crashing if keys don't match
                 message.setValuesForKeys(dictionary)
                 
@@ -119,7 +119,7 @@ class ChatLogController: UIViewController, UICollectionViewDelegateFlowLayout, U
     }
     
     fileprivate func estimateFrameForText(_ text: String) -> CGRect {
-        let size = CGSize(width: 200, height: 1000)
+        let size = CGSize(width: view.frame.width, height: view.frame.height)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
         return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 16)], context: nil)
     }
