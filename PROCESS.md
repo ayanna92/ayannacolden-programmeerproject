@@ -30,3 +30,6 @@
 # Week 2
 ## Day 8 (Mon):
 * Fixed following user display problem, thanks to groupmate suggesting dispatch main async! SO HAPPY
+* continued trying to make chat work, implementing different method that I found on firebase website themselves. Having a hard time figuring out how to make the chat one on one, rather than all users seeing the same chat. Also having problems retrieving information from segue, which I appear to be send properly so I have no clue why.
+
+## Day 9 (Tue):
