@@ -19,11 +19,52 @@ class NewMessagesController: UITableViewController {
         super.viewDidLoad()
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
-        
+        followingUsers()
         tableView.register(UserMessageCell.self, forCellReuseIdentifier: cellId)
         
-        fetchUser()
+        
     }
+    
+    func followingUsers() {
+        let ref = FIRDatabase.database().reference()
+        let uid = FIRAuth.auth()!.currentUser!.uid
+        
+        ref.child("users").child(uid).child("following").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
+            if let following = snapshot.value as? [String: AnyObject] {
+                for(_, value) in following {
+                    let fid = value as! String
+                    
+                    let userToShow = UserMessages()
+                    userToShow.uid = fid
+                    ref.child("users").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
+                        
+                        let user = snapshot.value as! [String : AnyObject]
+                        self.users.removeAll()
+                        if fid == value as? String {
+                            for (_, value) in user {
+                                let uid = value["uid"] as? String
+                                if fid == uid {
+
+                                    DispatchQueue.main.async {
+                                        
+                                        if let fullName = value["fullname"] as? String, let imagePath = value["urlToImage"] as? String {
+                                            userToShow.fullname = fullName
+                                            userToShow.urlToImage = imagePath
+                                            self.users.append(userToShow)
+                                            
+                                        }
+                                        self.tableView.reloadData()
+                                    }
+                                    
+                                }
+                            }
+                        }
+                    })
+                }
+            }
+        })
+    }
+
     
     func fetchUser() {
         FIRDatabase.database().reference().child("users").observe(.childAdded, with: { (snapshot) in

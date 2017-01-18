@@ -11,7 +11,7 @@
 //
 //class NewMessageController: UITableViewController {
 //    
-//    var messagesController: MessagesTableViewController?
+////    var messagesController: MessagesTableViewController?
 //    
 //    let cellId = "cellId"
 //    

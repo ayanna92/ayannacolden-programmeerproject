@@ -36,7 +36,9 @@ class MessagesController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
+//        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
         
         let image = UIImage(named: "new_message_icon")
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(handleNewMessage))
@@ -289,9 +291,15 @@ class MessagesController: UITableViewController {
             print(logoutError)
         }
         
+        
         let loginController = LoginViewController()
         loginController.messagesController = self
-        present(loginController, animated: true, completion: nil)
+        let naviController = UINavigationController(rootViewController: loginController)
+        present(naviController, animated: true, completion: nil)
+    }
+    
+    func handleCancel() {
+        dismiss(animated: true, completion: nil)
     }
     
 }
