@@ -34,6 +34,8 @@
 		55AE65711E2EA298003BCC35 /* ChatInputContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AE65701E2EA298003BCC35 /* ChatInputContainerView.swift */; };
 		55AE65731E2EA372003BCC35 /* UserMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AE65721E2EA372003BCC35 /* UserMessages.swift */; };
 		55AE65751E2EA5F5003BCC35 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AE65741E2EA5F5003BCC35 /* Extensions.swift */; };
+		55EE83861E2FAD2E004B3192 /* ContractViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EE83851E2FAD2E004B3192 /* ContractViewController.swift */; };
+		55EE83881E2FB630004B3192 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EE83871E2FB630004B3192 /* Post.swift */; };
 		55FDAE1D1E24E09300A172CF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 55FDAE1C1E24E09300A172CF /* GoogleService-Info.plist */; };
 		55FDAE1F1E24E5E900A172CF /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FDAE1E1E24E5E900A172CF /* SignupViewController.swift */; };
 		55FDAE211E24F47600A172CF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FDAE201E24F47600A172CF /* LoginViewController.swift */; };
@@ -93,6 +95,8 @@
 		55AE65701E2EA298003BCC35 /* ChatInputContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatInputContainerView.swift; sourceTree = "<group>"; };
 		55AE65721E2EA372003BCC35 /* UserMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserMessages.swift; sourceTree = "<group>"; };
 		55AE65741E2EA5F5003BCC35 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		55EE83851E2FAD2E004B3192 /* ContractViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContractViewController.swift; sourceTree = "<group>"; };
+		55EE83871E2FB630004B3192 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		55FDAE1C1E24E09300A172CF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		55FDAE1E1E24E5E900A172CF /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		55FDAE201E24F47600A172CF /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -214,6 +218,7 @@
 				55FDAE1E1E24E5E900A172CF /* SignupViewController.swift */,
 				55FDAE201E24F47600A172CF /* LoginViewController.swift */,
 				55275CD41E2633F800456990 /* UploadViewController.swift */,
+				55EE83851E2FAD2E004B3192 /* ContractViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -233,6 +238,7 @@
 			children = (
 				55AE65721E2EA372003BCC35 /* UserMessages.swift */,
 				55275CDE1E28042C00456990 /* Message.swift */,
+				55EE83871E2FB630004B3192 /* Post.swift */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -566,12 +572,14 @@
 				55AE65611E2D0063003BCC35 /* ChatCell.swift in Sources */,
 				55FDAE1F1E24E5E900A172CF /* SignupViewController.swift in Sources */,
 				5532B50D1E250B1500FE84CA /* User.swift in Sources */,
+				55EE83881E2FB630004B3192 /* Post.swift in Sources */,
 				55FDAE231E2507C400A172CF /* UserCell.swift in Sources */,
 				55AE65731E2EA372003BCC35 /* UserMessages.swift in Sources */,
 				55AE65751E2EA5F5003BCC35 /* Extensions.swift in Sources */,
 				55275CDF1E28042C00456990 /* Message.swift in Sources */,
 				55AE656F1E2EA203003BCC35 /* UserMessageCell.swift in Sources */,
 				5517CA6D1E242A4800F3F8F5 /* AppDelegate.swift in Sources */,
+				55EE83861E2FAD2E004B3192 /* ContractViewController.swift in Sources */,
 				55275CE31E280FD400456990 /* NewMessageController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

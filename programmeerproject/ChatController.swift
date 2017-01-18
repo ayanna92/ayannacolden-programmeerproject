@@ -21,6 +21,8 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         }
     }
     
+    var imagePicked: UIImage?
+    
     var messages = [Message]()
     
     func observeMessages() {
@@ -151,16 +153,18 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         var selectedImageFromPicker: UIImage?
         
         if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
-            selectedImageFromPicker = editedImage
+            imagePicked = editedImage
         } else if let originalImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
             
-            selectedImageFromPicker = originalImage
+            imagePicked = originalImage
         }
         
-        if let selectedImage = selectedImageFromPicker {
+        if let selectedImage = imagePicked {
             uploadToFirebaseStorageUsingImage(selectedImage, completion: { (imageUrl) in
                 self.sendMessageWithImageUrl(imageUrl, image: selectedImage)
+                
             })
+            
         }
     }
     
@@ -195,8 +199,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
                         let postFeed = ["\(key)": feed]
                         
                         reference.child("message_images").updateChildValues(postFeed)
-                        
-                        //self.dismiss(animated: true, completion: nil)
+
                     }
                 })
                 
@@ -206,6 +209,19 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            // we got back an error!
+            let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+        } else {
+            let ac = UIAlertController(title: "Saved!", message: "Your altered image has been saved to your photos.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+        }
     }
     
     override var inputAccessoryView: UIView? {
@@ -283,6 +299,14 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
             //fall in here if its an image message
             cell.bubbleWidthAnchor?.constant = 200
             cell.textView.isHidden = true
+            
+            if self.imagePicked != nil {
+                UIImageWriteToSavedPhotosAlbum(self.imagePicked!, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
+            } else {
+                print("still no image")
+                // maybe give you must upload photo first alert
+            }
+            
         }
         
         cell.playButton.isHidden = message.videoUrl == nil
@@ -318,6 +342,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
             cell.messageImageView.loadImageUsingCacheWithUrlString(messageImageUrl)
             cell.messageImageView.isHidden = false
             cell.bubbleView.backgroundColor = UIColor.clear
+            
         } else {
             cell.messageImageView.isHidden = true
         }
@@ -436,6 +461,14 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
                 zoomingImageView.frame = CGRect(x: 0, y: 0, width: keyWindow.frame.width, height: height)
                 
                 zoomingImageView.center = keyWindow.center
+                
+                if self.imagePicked != nil {
+                    UIImageWriteToSavedPhotosAlbum(self.imagePicked!, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
+                } else {
+                    print("no image")
+                    // maybe give you must upload photo first alert
+                }
+
                 
             }, completion: { (completed) in
                 //                    do nothing
