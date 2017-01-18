@@ -44,8 +44,8 @@ class ChatInputContainerView: UIView, UITextFieldDelegate {
         //x,y,w,h
         uploadImageView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
         uploadImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        uploadImageView.widthAnchor.constraint(equalToConstant: 44).isActive = true
-        uploadImageView.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        uploadImageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        uploadImageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
         
         sendButton.setTitle("Send", for: UIControlState())

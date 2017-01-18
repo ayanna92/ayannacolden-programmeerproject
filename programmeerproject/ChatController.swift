@@ -165,7 +165,11 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     }
     
     fileprivate func uploadToFirebaseStorageUsingImage(_ image: UIImage, completion: @escaping (_ imageUrl: String) -> ()) {
+        
+        let uid = FIRAuth.auth()?.currentUser!.uid
+        let reference = FIRDatabase.database().reference()
         let imageName = UUID().uuidString
+        let key = reference.child("message_images").childByAutoId().key
         let ref = FIRStorage.storage().reference().child("message_images").child(imageName)
         
         if let uploadData = UIImageJPEGRepresentation(image, 0.2) {
@@ -179,6 +183,22 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
                 if let imageUrl = metadata?.downloadURL()?.absoluteString {
                     completion(imageUrl)
                 }
+                
+                ref.downloadURL(completion: { (url, error) in
+                    if let url = url {
+                        let feed = ["userID": uid,
+                                    "toId": self.user!.uid!,
+                                    "pathToImage": url.absoluteString,
+                                    "author": FIRAuth.auth()!.currentUser!.displayName!,
+                                    "postID": key] as [String: Any]
+                        
+                        let postFeed = ["\(key)": feed]
+                        
+                        reference.child("message_images").updateChildValues(postFeed)
+                        
+                        //self.dismiss(animated: true, completion: nil)
+                    }
+                })
                 
             })
         }
