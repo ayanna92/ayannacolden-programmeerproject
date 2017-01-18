@@ -34,3 +34,7 @@
 
 ## Day 9 (Tue):
 * WORKING CHAT, still suuper buggy and I have a lot of file cleaning up to do, and rid of viewcontrollers I'm not using. BUT my chat is functioning, and I'm very happy with this development. 
+
+## Day 10 (Wed):
+* Made chat less buggy, can now see profile images in navigation bar and profile images/names of users you're chatting with and can send images to each other
+
