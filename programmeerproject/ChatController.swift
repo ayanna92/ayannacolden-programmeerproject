@@ -212,18 +212,20 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         dismiss(animated: true, completion: nil)
     }
     
-    func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
-        if let error = error {
-            // we got back an error!
-            let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "OK", style: .default))
-            present(ac, animated: true)
-        } else {
-            let ac = UIAlertController(title: "Saved!", message: "Your altered image has been saved to your photos.", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "OK", style: .default))
-            present(ac, animated: true)
-        }
-    }
+//    func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+//        if let error = error {
+//            print(error.localizedDescription)
+//            // we got back an error!
+//            let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
+//            ac.addAction(UIAlertAction(title: "OK", style: .default))
+//            present(ac, animated: true)
+//        } else {
+//            print("saved")
+//            let ac = UIAlertController(title: "Saved!", message: "Your altered image has been saved to your photos.", preferredStyle: .alert)
+//            ac.addAction(UIAlertAction(title: "OK", style: .default))
+//            present(ac, animated: true)
+//        }
+//    }
     
     override var inputAccessoryView: UIView? {
         get {
@@ -462,13 +464,6 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
                 zoomingImageView.frame = CGRect(x: 0, y: 0, width: keyWindow.frame.width, height: height)
                 
                 zoomingImageView.center = keyWindow.center
-                
-//                if self.imagePicked != nil {
-//                    UIImageWriteToSavedPhotosAlbum(self.imagePicked, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
-//                } else {
-//                    print("no image")
-//                    // maybe give you must upload photo first alert
-//                }
 
                 
             }, completion: { (completed) in

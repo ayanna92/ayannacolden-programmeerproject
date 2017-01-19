@@ -98,32 +98,39 @@ class ChatMessageCell: UICollectionViewCell {
         imageView.layer.masksToBounds = true
         imageView.contentMode = .scaleAspectFill
         imageView.isUserInteractionEnabled = true
-        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomTap)))
-        imageView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(imageAction)))
+        let zoomTap = UISwipeGestureRecognizer(target: self, action: #selector(handleZoomTap))
+        zoomTap.direction = UISwipeGestureRecognizerDirection.left
+        imageView.addGestureRecognizer(zoomTap)
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(imageAction))
+        doubleTap.numberOfTapsRequired = 2
+        imageView.addGestureRecognizer(doubleTap)
         
         return imageView
     }()
     
-    func imageAction(_ tapGesture: UILongPressGestureRecognizer) {
-        UIImageWriteToSavedPhotosAlbum(messageImageView.image!, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
+    func imageAction(_ tapGesture: UITapGestureRecognizer) {
+        if let imageView = tapGesture.view as? UIImageView {
+          UIImageWriteToSavedPhotosAlbum(messageImageView.image!, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
+        }
     }
     
     func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {
-            print("error image save")
+            print(error.localizedDescription)
             // we got back an error!
-//            let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
-//            ac.addAction(UIAlertAction(title: "OK", style: .default))
-//            present(ac, animated: true)
+            let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            self.chatLogController?.present(ac, animated: true)
         } else {
-            print("success image save")
-//            let ac = UIAlertController(title: "Saved!", message: "Your altered image has been saved to your photos.", preferredStyle: .alert)
-//            ac.addAction(UIAlertAction(title: "OK", style: .default))
-//            present(ac, animated: true)
+            print("saved")
+            let ac = UIAlertController(title: "Saved!", message: "This image has been saved to your photos.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            self.chatLogController?.present(ac, animated: true)
         }
     }
     
-    func handleZoomTap(_ tapGesture: UITapGestureRecognizer) {
+    
+    func handleZoomTap(_ tapGesture: UISwipeGestureRecognizer) {
         if message?.videoUrl != nil {
             return
         }
