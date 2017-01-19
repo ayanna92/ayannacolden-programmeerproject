@@ -20,6 +20,7 @@ class Message: NSObject {
     var imageUrl: String?
     var imageHeight: NSNumber?
     var imageWidth: NSNumber?
+    var imagePicked: UIImage?
     
     var videoUrl: String?
     
@@ -38,6 +39,7 @@ class Message: NSObject {
         imageUrl = dictionary["imageUrl"] as? String
         imageHeight = dictionary["imageHeight"] as? NSNumber
         imageWidth = dictionary["imageWidth"] as? NSNumber
+        imagePicked = dictionary["imagePicked"] as? UIImage
         
         videoUrl = dictionary["videoUrl"] as? String
     }

@@ -21,7 +21,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         }
     }
     
-    var imagePicked: UIImage?
+    var imagePicked = [UIImage]()
     
     var messages = [Message]()
     
@@ -153,16 +153,17 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         var selectedImageFromPicker: UIImage?
         
         if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
-            imagePicked = editedImage
+            selectedImageFromPicker = editedImage
         } else if let originalImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
             
-            imagePicked = originalImage
+            selectedImageFromPicker = originalImage
         }
         
-        if let selectedImage = imagePicked {
+        if let selectedImage = selectedImageFromPicker {
             uploadToFirebaseStorageUsingImage(selectedImage, completion: { (imageUrl) in
                 self.sendMessageWithImageUrl(imageUrl, image: selectedImage)
                 
+                self.imagePicked.append(selectedImage)
             })
             
         }
@@ -300,12 +301,12 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
             cell.bubbleWidthAnchor?.constant = 200
             cell.textView.isHidden = true
             
-            if self.imagePicked != nil {
-                UIImageWriteToSavedPhotosAlbum(self.imagePicked!, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
-            } else {
-                print("still no image")
-                // maybe give you must upload photo first alert
-            }
+//            if self.imagePicked[(indexPath as NSIndexPath).item] != nil {
+//                UIImageWriteToSavedPhotosAlbum(self.imagePicked[(indexPath as NSIndexPath).item], self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
+//            } else {
+//                print("still no image")
+//                // maybe give you must upload photo first alert
+//            }
             
         }
         
@@ -462,12 +463,12 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
                 
                 zoomingImageView.center = keyWindow.center
                 
-                if self.imagePicked != nil {
-                    UIImageWriteToSavedPhotosAlbum(self.imagePicked!, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
-                } else {
-                    print("no image")
-                    // maybe give you must upload photo first alert
-                }
+//                if self.imagePicked != nil {
+//                    UIImageWriteToSavedPhotosAlbum(self.imagePicked, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
+//                } else {
+//                    print("no image")
+//                    // maybe give you must upload photo first alert
+//                }
 
                 
             }, completion: { (completed) in

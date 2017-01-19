@@ -99,9 +99,29 @@ class ChatMessageCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.isUserInteractionEnabled = true
         imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomTap)))
+        imageView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(imageAction)))
         
         return imageView
     }()
+    
+    func imageAction(_ tapGesture: UILongPressGestureRecognizer) {
+        UIImageWriteToSavedPhotosAlbum(messageImageView.image!, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
+    }
+    
+    func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            print("error image save")
+            // we got back an error!
+//            let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
+//            ac.addAction(UIAlertAction(title: "OK", style: .default))
+//            present(ac, animated: true)
+        } else {
+            print("success image save")
+//            let ac = UIAlertController(title: "Saved!", message: "Your altered image has been saved to your photos.", preferredStyle: .alert)
+//            ac.addAction(UIAlertAction(title: "OK", style: .default))
+//            present(ac, animated: true)
+        }
+    }
     
     func handleZoomTap(_ tapGesture: UITapGestureRecognizer) {
         if message?.videoUrl != nil {
