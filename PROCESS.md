@@ -41,4 +41,6 @@
 
 ## Day 11 (Thu):
 * I can now save images from within chat between users! Still buggy in the sense that it's too tap sensitive and therefore saves images way too often
+* debugged saving and zooming images in chat
+* started on contract making viewcontroller: users can now upload two different images to make a contract. Still need to add images to firebase and save contract --> to contract tableview (needs to be made still)
 
