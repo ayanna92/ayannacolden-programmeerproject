@@ -40,5 +40,5 @@
 * Having a hard time saving images within chat itself, have tried using imagepicked variable, and placing it when user zooms in on message. But I need to figure out a way to fill variable with the url/img of the selected cell. Should ask about this tomorrow at SP, once this is done I can make the contracts, or at least the first contract view. 
 
 ## Day 11 (Thu):
-
+* I can now save images from within chat between users! Still buggy in the sense that it's too tap sensitive and therefore saves images way too often
 
