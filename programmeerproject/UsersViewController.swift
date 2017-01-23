@@ -12,6 +12,7 @@ import Firebase
 class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     
+    @IBOutlet weak var open: UIBarButtonItem!
     @IBOutlet weak var tableview: UITableView!
 
     var user = [User]()
@@ -21,6 +22,10 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
         super.viewDidLoad()
         
         retrieveUsers()
+        open.target = self.revealViewController()
+        open.action = Selector("revealToggle:")
+        
+        self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
     }
     
     
@@ -126,6 +131,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
     }
     
+    // removed segue here (need to see if able to use something else
     @IBAction func logOutPressed(_ sender: Any) {
     }
     

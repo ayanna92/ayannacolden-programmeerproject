@@ -31,7 +31,7 @@ class LoginViewController: UIViewController {
             }
             
             if let user = user {
-                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "usersVC")
+                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SWReveal")
                 
                 self.present(vc, animated: true, completion: nil)
             }

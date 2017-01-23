@@ -33,21 +33,30 @@ class MessagesController: UITableViewController {
     
     let cellId = "cellId"
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
 //        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
+//        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
+        
+        
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "menu_icon") , style: .plain, target: self.revealViewController(), action: Selector("revealToggle:"))
+        
+
         
         let image = UIImage(named: "new_message_icon")
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(handleNewMessage))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(handleNewMessage))
         
         checkIfUserIsLoggedIn()
         
         tableView.register(UserMessageCell.self, forCellReuseIdentifier: cellId)
         
         //        observeMessages()
+        
+//        self.tableView.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         
         tableView.allowsMultipleSelectionDuringEditing = true
     }
@@ -194,8 +203,10 @@ class MessagesController: UITableViewController {
     func handleNewMessage() {
         let newMessageController = NewMessagesController()
         newMessageController.messagesController = self
-        let navController = UINavigationController(rootViewController: newMessageController)
-        present(navController, animated: true, completion: nil)
+//        let navController = UINavigationController(rootViewController: newMessageController)
+//        
+//        present(navController, animated: true, completion: nil)
+        self.navigationController?.pushViewController(newMessageController, animated: true)
     }
     
     func checkIfUserIsLoggedIn() {
@@ -300,8 +311,13 @@ class MessagesController: UITableViewController {
     
     func handleCancel() {
         dismiss(animated: true, completion: nil)
+        
+//        self.tableView.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+//        self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
     }
     
 }
+
+
 
 

@@ -14,6 +14,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var previewImage: UIImageView!
     @IBOutlet weak var postBtn: UIButton!
     @IBOutlet weak var selectBtn: UIButton!
+    @IBOutlet weak var open: UIBarButtonItem!
     
     var picker = UIImagePickerController()
     
@@ -22,6 +23,10 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         super.viewDidLoad()
 
         picker.delegate = self
+        open.target = self.revealViewController()
+        open.action = Selector("revealToggle:")
+        
+        self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
@@ -45,8 +50,9 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
 
     @IBAction func chatLogPressed(_ sender: Any) {
         let messagesController = MessagesController()
-        let navController = UINavigationController(rootViewController: messagesController)
-        present(navController, animated: true, completion: nil)
+//        let navController = UINavigationController(rootViewController: messagesController)
+//        present(navController, animated: true, completion: nil)
+        self.navigationController?.pushViewController(messagesController, animated: true)
     }
     
     @IBAction func postPressed(_ sender: Any) {

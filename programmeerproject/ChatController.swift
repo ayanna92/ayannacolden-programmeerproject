@@ -69,6 +69,9 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         
         collectionView?.keyboardDismissMode = .interactive
         
+        let image = UIImage(named: "make_contract_icon")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(makeContract))
+        
         setupKeyboardObservers()
     }
     
@@ -77,6 +80,16 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         chatInputContainerView.chatLogController = self
         return chatInputContainerView
     }()
+    
+    // Function to go to make contract view.
+    func makeContract() {
+//        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "contractVc")
+        
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "sideTable")
+        
+        self.present(vc, animated: true, completion: nil)
+        // performSegue(withIdentifier: "makeContract", sender: present)
+    }
     
     func handleUploadTap() {
         let imagePickerController = UIImagePickerController()
@@ -212,20 +225,6 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         dismiss(animated: true, completion: nil)
     }
     
-//    func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
-//        if let error = error {
-//            print(error.localizedDescription)
-//            // we got back an error!
-//            let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
-//            ac.addAction(UIAlertAction(title: "OK", style: .default))
-//            present(ac, animated: true)
-//        } else {
-//            print("saved")
-//            let ac = UIAlertController(title: "Saved!", message: "Your altered image has been saved to your photos.", preferredStyle: .alert)
-//            ac.addAction(UIAlertAction(title: "OK", style: .default))
-//            present(ac, animated: true)
-//        }
-//    }
     
     override var inputAccessoryView: UIView? {
         get {

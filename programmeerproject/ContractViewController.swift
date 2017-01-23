@@ -15,98 +15,163 @@ class ContractViewController: UIViewController, UIImagePickerControllerDelegate,
     @IBOutlet weak var userOneLabel: UILabel!
     @IBOutlet weak var userTwoLabel: UILabel!
     @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var saveSecondButton: UIButton!
     @IBOutlet weak var leftSelectButton: UIButton!
     @IBOutlet weak var rightSelectButton: UIButton!
+    @IBOutlet weak var open: UIBarButtonItem!
     
-    var picker = UIImagePickerController()
+    var pickerLeft = UIImagePickerController()
+    var pickerRight = UIImagePickerController()
     var following = [String]()
     var posts = [Post]()
-
+    
+    var chatController: ChatController?
+    var buttonIndex = Int()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        picker.delegate = self
+        pickerLeft.delegate = self
+        pickerRight.delegate = self
+        
+        
+        open.target = self.revealViewController()
+        open.action = Selector("revealToggle:")
+        
+//        self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any] ) {
+
+        let image = info[UIImagePickerControllerEditedImage] as? UIImage
         
-        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
+        if buttonIndex == 0 {
             self.leftImage.image = image
             leftSelectButton.isHidden = true
-        }
-        
-        if let imageTwo = info[UIImagePickerControllerEditedImage] as? UIImage {
-            self.rightImage.image = imageTwo
-            rightSelectButton.isHidden =  true
             saveButton.isHidden = false
+            
+        } else if buttonIndex == 1 {
+            self.rightImage.image = image
+            rightSelectButton.isHidden =  true
+            saveSecondButton.isHidden = false
+            
+            
         }
         
         self.dismiss(animated: true, completion: nil)
     }
+    
 
     @IBAction func leftSelectPressed(_ sender: Any) {
-        // find way to select image from firebase conversation
+        buttonIndex = 0
+        pickerLeft.allowsEditing = true
+        pickerLeft.sourceType = .photoLibrary
+        
+        self.present(pickerLeft, animated: true, completion: nil)
     }
 
     @IBAction func rightSelectPressed(_ sender: Any) {
-        // find way to select image from firebase conversation
+        buttonIndex = 1
+        pickerRight.allowsEditing = true
+        pickerRight.sourceType = .photoLibrary
+        
+        self.present(pickerRight, animated: true, completion: nil)
     }
     
     @IBAction func savePressed(_ sender: Any) {
         
-    }
-    
-    func fetchPosts(){
+        AppDelegate.instance().showActivityIndicator()
         
+        let uid = FIRAuth.auth()?.currentUser!.uid
         let ref = FIRDatabase.database().reference()
+        let storage = FIRStorage.storage().reference(forURL: "gs://programmeerproject.appspot.com")
         
-        ref.child("users").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
-            
-            let users = snapshot.value as! [String : AnyObject]
-            
-            for (_,value) in users {
-                if let uid = value["uid"] as? String {
-                    if uid == FIRAuth.auth()?.currentUser?.uid {
-                        if let followingUsers = value["following"] as? [String : String]{
-                            for (_,user) in followingUsers{
-                                self.following.append(user)
-                            }
-                        }
-                        self.following.append(FIRAuth.auth()!.currentUser!.uid)
-                        
-                        ref.child("message_images").queryOrderedByKey().observeSingleEvent(of: .value, with: { (snap) in
-                            
-                            
-                            let postsSnap = snap.value as! [String : AnyObject]
-                            
-                            for (_,post) in postsSnap {
-                                if let userID = post["userID"] as? String {
-                                    for each in self.following {
-                                        if each == userID {
-                                            let posst = Post()
-                                            if let author = post["author"] as? String, let pathToImage = post["pathToImage"] as? String, let postID = post["postID"] as? String {
-                                                
-                                                posst.author = author
-                                                posst.pathToImage = pathToImage
-                                                posst.postID = postID
-                                                posst.userID = userID
-                                                
-                                                self.posts.append(posst)
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        })
-                    }
-                }
+        let key = ref.child("contracts").childByAutoId().key
+        let imageRef = storage.child("contracts").child(uid!).child("\(key).jpg")
+        
+        let dataPhotoLeft = UIImageJPEGRepresentation(self.leftImage.image!, 0.6)
+        
+        let uploadTaskLeft = imageRef.put(dataPhotoLeft!, metadata: nil) {(metadata, error) in
+            if error != nil {
+                print(error!.localizedDescription)
+                AppDelegate.instance().dismissActivityIndicator()
+                return
             }
             
-        })
-        ref.removeAllObservers()
-    }
+            imageRef.downloadURL(completion: { (url, error) in
+                if let url = url {
+                    let feed = ["userID": uid,
+                                "pathToImage": url.absoluteString,
+                                "author": FIRAuth.auth()!.currentUser!.displayName!,
+                                "postID": key] as [String: Any]
+                    
+                    let postFeed = ["\(key)": feed]
+                    
+                    ref.child("contracts").updateChildValues(postFeed)
+                    AppDelegate.instance().dismissActivityIndicator()
+                    
 
-    override func didReceiveMemoryWarning() {
+                }
+            })
+        }
+        
+        uploadTaskLeft.resume()
+        
+    }
+//    @IBAction func cancelPressed(_ sender: Any) {
+//        self.dismiss(animated: true, completion: nil)
+//    }
+    @IBAction func readMessagePressed(_ sender: Any) {
+//        let messagesController = MessagesController()
+
+//        let navController = UINavigationController(rootViewController: messagesController)
+//        present(navController, animated: true, completion: nil)
+        
+    }
+    
+    @IBAction func saveSecondPressed(_ sender: Any) {
+        
+//        AppDelegate.instance().showActivityIndicator()
+        
+        let uid = FIRAuth.auth()?.currentUser!.uid
+        let ref = FIRDatabase.database().reference()
+        let storage = FIRStorage.storage().reference(forURL: "gs://programmeerproject.appspot.com")
+        
+        let key = ref.child("contracts").childByAutoId().key
+        let imageRef = storage.child("contracts").child(uid!).child("\(key).jpg")
+        
+        let dataPhotoRight = UIImageJPEGRepresentation(self.rightImage.image!, 0.6)
+        
+        let uploadTaskRight = imageRef.put(dataPhotoRight!, metadata: nil) {(metadata, error) in
+            if error != nil {
+                print(error!.localizedDescription)
+//                AppDelegate.instance().dismissActivityIndicator()
+                return
+            }
+            
+            imageRef.downloadURL(completion: { (url, error) in
+                if let url = url {
+                    let feed = ["userID": uid,
+                                "pathToImage": url.absoluteString,
+                                "author": FIRAuth.auth()!.currentUser!.displayName!,
+                                "postID": key] as [String: Any]
+                    
+                    
+                    
+                    let postFeedRight = ["\(key)": feed]
+                    
+                    ref.child("contracts").updateChildValues(postFeedRight)
+//                    AppDelegate.instance().dismissActivityIndicator()
+                    
+                }
+            })
+        }
+        uploadTaskRight.resume()
+    }
+    
+    
+        override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
