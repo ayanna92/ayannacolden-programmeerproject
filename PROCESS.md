@@ -41,4 +41,10 @@
 
 ## Day 11 (Thu):
 * I can now save images from within chat between users! Still buggy in the sense that it's too tap sensitive and therefore saves images way too often
+* debugged saving and zooming images in chat
+* started on contract making viewcontroller: users can now upload two different images to make a contract. Still need to add images to firebase and save contract --> to contract tableview (needs to be made still)
+
+## Day 12 (Fri):
+* During presentations I saw one of classmates made a swipe menu in his app. Decided with the amount of viewcontrollers I have, a menu like that would make a lot of sense for me so plan on attempting to implement it this weekend. 
+* Found useful tutorial on swipe menu and started following it
 
