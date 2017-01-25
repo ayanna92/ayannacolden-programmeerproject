@@ -60,4 +60,7 @@
 
 ## Day 17 (Wed):
 * Working on newsfeed between two users, using instagram like app ep 4. Trying to retrieve from firebase, but seems to be problem with collectionview.reloaddata saying the link is ambiguous. So I need to figure out if this is because of storyboard link problems, or due to something else. 
+* Created working newsfeed! Decided on a newsfeed with all photos sent by your friends (maybe I'll do photos sent by yourself as well) since otherwise you're only looking at embarassing photos of yourself that are sent by your friends
+* Need to edit proposal, as now my app implementation has been changed quite a bit
+* And need to get on finally making app prettier
 
