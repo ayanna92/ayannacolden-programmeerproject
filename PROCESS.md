@@ -48,3 +48,16 @@
 * During presentations I saw one of classmates made a swipe menu in his app. Decided with the amount of viewcontrollers I have, a menu like that would make a lot of sense for me so plan on attempting to implement it this weekend. 
 * Found useful tutorial on swipe menu and started following it
 
+# Week 3
+## Day 15 (Mon):
+* Attempt finishing menu, bumped into problem with programmatically made controllers, couldn't segue connect
+
+## Day 16 (Tue):
+* Help from classmate, can now connect programmatically made controllers, but not new messages because this is in a containerview meaning it needs to be reached through a certain route otherwise chatlog users always comes back empty and I get taken back to login screen.
+* Can't figure out how to segue information from chatlog/messages to my contract, making the next steps near impossible
+* Trying to maybe think of changing these last parts of app drastically (making it a more social media forum for example), I could maybe create a news feed that can only be seen by two users? In a way displaying a contract...
+* Only have two more days and I'm freaking out.
+
+## Day 17 (Wed):
+* Working on newsfeed between two users, using instagram like app ep 4. Trying to retrieve from firebase, but seems to be problem with collectionview.reloaddata saying the link is ambiguous. So I need to figure out if this is because of storyboard link problems, or due to something else. 
+
