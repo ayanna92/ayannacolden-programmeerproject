@@ -71,8 +71,8 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         
         collectionView?.keyboardDismissMode = .interactive
         
-        let image = UIImage(named: "make_contract_icon")
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(makeContract))
+//        let image = UIImage(named: "make_contract_icon")
+//        navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(makeContract))
         
         setupKeyboardObservers()
     }
@@ -84,9 +84,9 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     }()
     
     // Function to go to make contract view.
-    func makeContract(_ user: UserMessages) {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "contractVc") as UIViewController
-        
+//    func makeContract(_ user: UserMessages) {
+//        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "contractVc") as UIViewController
+    
 //        let chatLogController = ChatController(collectionViewLayout: UICollectionViewFlowLayout())
 //        chatLogController.user = user
 //        
@@ -98,10 +98,10 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
 //        print(ContractViewController().userMake)
 //        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "sideTable")
 //        performSegue(withIdentifier: "chatContract", sender: self)
-        navigationController?.pushViewController(vc, animated: true)
-        //self.present(vc, animated: true, completion: nil)
-        // performSegue(withIdentifier: "makeContract", sender: present)
-    }
+//        navigationController?.pushViewController(vc, animated: true)
+//        //self.present(vc, animated: true, completion: nil)
+//        // performSegue(withIdentifier: "makeContract", sender: present)
+//    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         

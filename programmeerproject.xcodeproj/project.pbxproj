@@ -27,7 +27,6 @@
 		553F85381E38C1A100DBDB5F /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553F85371E38C1A100DBDB5F /* PostCell.swift */; };
 		55885B2B1E33625E00D53501 /* BackTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55885B2A1E33625E00D53501 /* BackTableVC.swift */; };
 		559515F61E37620500808301 /* NavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559515F51E37620500808301 /* NavViewController.swift */; };
-		559515F81E37689D00808301 /* NewNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559515F71E37689D00808301 /* NewNavViewController.swift */; };
 		55AC9B161E30FDF0005D7BE7 /* Contract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AC9B151E30FDF0005D7BE7 /* Contract.swift */; };
 		55AC9B1B1E325AE6005D7BE7 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55AC9B1A1E325AE6005D7BE7 /* SWRevealViewController.m */; };
 		55AE65611E2D0063003BCC35 /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AE65601E2D0063003BCC35 /* ChatCell.swift */; };
@@ -96,7 +95,6 @@
 		553F85371E38C1A100DBDB5F /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		55885B2A1E33625E00D53501 /* BackTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackTableVC.swift; sourceTree = "<group>"; };
 		559515F51E37620500808301 /* NavViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavViewController.swift; sourceTree = "<group>"; };
-		559515F71E37689D00808301 /* NewNavViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewNavViewController.swift; sourceTree = "<group>"; };
 		55AC9B151E30FDF0005D7BE7 /* Contract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contract.swift; sourceTree = "<group>"; };
 		55AC9B181E325AD2005D7BE7 /* SWRevealViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		55AC9B191E325AE6005D7BE7 /* programmeerproject-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "programmeerproject-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -237,10 +235,8 @@
 				55AE65671E2E9AEB003BCC35 /* ChatController.swift */,
 				55FDAE1E1E24E5E900A172CF /* SignupViewController.swift */,
 				55FDAE201E24F47600A172CF /* LoginViewController.swift */,
-				55275CD41E2633F800456990 /* UploadViewController.swift */,
 				55885B2A1E33625E00D53501 /* BackTableVC.swift */,
 				559515F51E37620500808301 /* NavViewController.swift */,
-				559515F71E37689D00808301 /* NewNavViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -280,6 +276,7 @@
 		55AE65761E2F8BB9003BCC35 /* Old Swift Files */ = {
 			isa = PBXGroup;
 			children = (
+				55275CD41E2633F800456990 /* UploadViewController.swift */,
 				55F2A08F1E37902800FE7AEB /* ContractsTableViewController.swift */,
 				55275CD61E26680900456990 /* ChatViewController.swift */,
 				55275CDC1E27F75A00456990 /* MessagesTableViewController.swift */,
@@ -595,7 +592,6 @@
 				55275CDD1E27F75B00456990 /* MessagesTableViewController.swift in Sources */,
 				55275CDB1E27DE4400456990 /* ChatLogController.swift in Sources */,
 				55FDAE211E24F47600A172CF /* LoginViewController.swift in Sources */,
-				559515F81E37689D00808301 /* NewNavViewController.swift in Sources */,
 				55AE656A1E2EA0C7003BCC35 /* NewMessagesController.swift in Sources */,
 				55275CD51E2633F800456990 /* UploadViewController.swift in Sources */,
 				55275CD71E26680900456990 /* ChatViewController.swift in Sources */,

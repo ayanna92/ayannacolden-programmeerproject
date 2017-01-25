@@ -37,15 +37,10 @@ class MessagesController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
-        
-//        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
-        
-        
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "menu_icon") , style: .plain, target: self.revealViewController(), action: Selector("revealToggle:"))
         
-
+        self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         
         let image = UIImage(named: "new_message_icon")
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(handleNewMessage))
@@ -54,9 +49,6 @@ class MessagesController: UITableViewController {
         
         tableView.register(UserMessageCell.self, forCellReuseIdentifier: cellId)
         
-        //        observeMessages()
-        
-//        self.tableView.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         
         tableView.allowsMultipleSelectionDuringEditing = true
     }

@@ -21,7 +21,9 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.title = "M.A.D. Users"
         retrieveUsers()
+        
         open.target = self.revealViewController()
         open.action = Selector("revealToggle:")
         

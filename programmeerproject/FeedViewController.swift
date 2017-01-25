@@ -18,17 +18,44 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     
     var posts = [Post]()
-    var following = [String]()
+    var userMessages = [UserMessages]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationItem.title = "Feed"
 
         fetch()
         
         open.target = self.revealViewController()
         open.action = Selector("revealToggle:")
+        
+        self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
     }
-
+    
+    // RETRIEVE PROFILE PHOTO USER, EDIT NEEDED!
+    func fetchProfileImg() {
+        let ref = FIRDatabase.database().reference()
+        ref.child("users").queryOrderedByKey().observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            let users = snapshot.value as! [String: AnyObject]
+            
+            DispatchQueue.main.async {
+             
+            for (_, value) in users {
+                if let uid = value["uid"] as? String {
+                    let userToShow = UserMessages()
+                    if let imagePath = value["urlToImage"] as? String {
+                        userToShow.urlToImage = imagePath
+                        self.userMessages.append(userToShow)
+                    }
+                }
+            }
+            self.collectionView.reloadData()
+            }
+        })
+        ref.removeAllObservers()
+    }
     
     func fetch() {
         let ref = FIRDatabase.database().reference()
@@ -45,7 +72,7 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
                         if let dictionary = snapshot.value as? [String: AnyObject] {
 
                             if let userID = dictionary["userID"] as? String, let toId = dictionary["toId"] as? String{
-                                    if toId == uid {
+                                    if toId == uid || userID == uid {
                                         DispatchQueue.main.async(execute: {
                                             
                                         let posst = Post()
@@ -60,6 +87,7 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
                                             print("image:\(posst.pathToImage)")
                                             
                                             self.posts.append(posst)
+                                    
                                         }
                             
                                             self.collectionView.reloadData()
@@ -89,6 +117,7 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: "postCell", for: indexPath) as! PostCell
         cell.postImage.downloadImage(from: self.posts[indexPath.row].pathToImage!)
         cell.authorLabel.text = self.posts[indexPath.row].author
+        cell.profileImage.downloadImage(from: self.userMessages[indexPath.row].urlToImage)
         
         return cell
     }

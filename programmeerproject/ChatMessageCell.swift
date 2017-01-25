@@ -114,10 +114,10 @@ class ChatMessageCell: UICollectionViewCell {
         }
     }
     
+    // Image saved succesfull or error alert.
     func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {
             print(error.localizedDescription)
-            // we got back an error!
             let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK", style: .default))
             self.chatLogController?.present(ac, animated: true)

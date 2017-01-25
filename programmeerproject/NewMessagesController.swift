@@ -18,23 +18,26 @@ class NewMessagesController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
+        navigationItem.title = "New Message"
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "menu_icon") , style: .plain, target: self.revealViewController(), action: Selector("revealToggle:"))
-        
-//        self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
         
         followingUsers()
+        
         tableView.register(UserMessageCell.self, forCellReuseIdentifier: cellId)
         
         
     }
     
     func followingUsers() {
+        
+        
+        
         let ref = FIRDatabase.database().reference()
         let uid = FIRAuth.auth()!.currentUser!.uid
         
         ref.child("users").child(uid).child("following").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
+            AppDelegate.instance().showActivityIndicator()
             if let following = snapshot.value as? [String: AnyObject] {
                 for(_, value) in following {
                     let fid = value as! String
@@ -44,54 +47,35 @@ class NewMessagesController: UITableViewController {
                     ref.child("users").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
                         
                         let user = snapshot.value as! [String : AnyObject]
-                        self.users.removeAll()
                         if fid == value as? String {
-                            for (_, value) in user {
-                                let uid = value["uid"] as? String
+                            for (_, values) in user {
+                                let uid = values["uid"] as? String
                                 if fid == uid {
 
                                     DispatchQueue.main.async {
                                         
-                                        if let fullName = value["fullname"] as? String, let imagePath = value["urlToImage"] as? String {
+                                        if let fullName = values["fullname"] as? String, let imagePath = values["urlToImage"] as? String {
                                             userToShow.fullname = fullName
                                             userToShow.urlToImage = imagePath
                                             self.users.append(userToShow)
                                             
                                         }
+                                        
                                         self.tableView.reloadData()
+                                        AppDelegate.instance().dismissActivityIndicator()
                                     }
                                     
                                 }
                             }
                         }
+                        
+                        
                     })
                 }
             }
         })
     }
 
-    
-    func fetchUser() {
-        FIRDatabase.database().reference().child("users").observe(.childAdded, with: { (snapshot) in
-            
-            if let dictionary = snapshot.value as? [String: AnyObject] {
-                let user = UserMessages()
-                user.uid = snapshot.key
-                
-                //if you use this setter, your app will crash if your class properties don't exactly match up with the firebase dictionary keys
-                user.setValuesForKeys(dictionary)
-                self.users.append(user)
-                
-                //this will crash because of background thread, so lets use dispatch_async to fix
-                DispatchQueue.main.async(execute: {
-                    self.tableView.reloadData()
-                })
-                
-                //                user.name = dictionary["name"]
-            }
-            
-        }, withCancel: nil)
-    }
     
     func handleCancel() {
         dismiss(animated: true, completion: nil)
