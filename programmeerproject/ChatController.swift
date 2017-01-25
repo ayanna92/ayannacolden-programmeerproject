@@ -77,6 +77,20 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         setupKeyboardObservers()
     }
     
+    // Instruction on how to save/zoom image alert, only shown once.
+    override func viewDidAppear(_ animated: Bool) {
+        
+        if AppDelegate.instance().disclaimerHasBeenDisplayed == false {
+            
+            AppDelegate.instance().disclaimerHasBeenDisplayed = true
+            
+            let alertController = UIAlertController(title: "Instructions", message: "To save: double tap image. To zoom-in: slide left on image.", preferredStyle: UIAlertControllerStyle.alert)
+            alertController.addAction(UIAlertAction(title: "Accept", style: UIAlertActionStyle.default,handler: nil))
+            
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+    
     lazy var inputContainerView: ChatInputContainerView = {
         let chatInputContainerView = ChatInputContainerView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 50))
         chatInputContainerView.chatLogController = self

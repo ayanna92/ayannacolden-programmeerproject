@@ -24,23 +24,34 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         super.viewDidLoad()
         
         navigationItem.title = "Feed"
+        
+        self.userMessages.removeAll()
+        self.posts.removeAll()
 
         fetch()
+        
+        self.userMessages.removeAll()
+        self.posts.removeAll()
         
         open.target = self.revealViewController()
         open.action = Selector("revealToggle:")
         
+        self.collectionView.backgroundColor = UIColor.groupTableViewBackground
+        
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
     }
     
-    
+    // ASK WHY IS NOT RELOADING PROPERLY
     func fetch() {
         let ref = FIRDatabase.database().reference()
+//        self.userMessages.removeAll()
+//        self.posts.removeAll()
         
         // Retrieve profile pictures.
         ref.child("users").queryOrderedByKey().observeSingleEvent(of: .value, with: { (snapshot) in
             
             let users = snapshot.value as! [String: AnyObject]
+            
             
             DispatchQueue.main.async {
                 
@@ -53,7 +64,10 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
                         }
                     }
                 }
+                
+                 //self.collectionView.reloadData()
             }
+            //ref.removeAllObservers()
         })
         
         // Retrieve images sent in chats, for feed.
@@ -84,11 +98,14 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
                                             print("image:\(posst.pathToImage)")
                                             
                                             self.posts.append(posst)
-                                    
+                                            
                                         }
-                            
+                                            
                                             self.collectionView.reloadData()
+                                            
                                         })
+                                        //self.posts.removeAll()
+                                        //self.userMessages.removeAll()
                                 }
                             }
                         
@@ -107,7 +124,12 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         print("count:\(self.posts.count)")
+        print("user.count:\(self.userMessages.count)")
         return self.posts.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        cell.backgroundColor = UIColor.clear
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

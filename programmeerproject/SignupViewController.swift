@@ -18,6 +18,7 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var confirmPwField: UITextField!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var selectButton: UIButton!
     
     let picker = UIImagePickerController()
     var userStorage: FIRStorageReference!
@@ -25,6 +26,9 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
 
         picker.delegate = self
         
@@ -48,6 +52,7 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
         if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
             self.imageView.image = image
             nextButton.isHidden = false
+            selectButton.isHidden = true
         }
         self.dismiss(animated: true, completion: nil)
         
@@ -55,7 +60,15 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     @IBAction func nextPressed(_ sender: Any) {
         
-        guard nameField.text != "", emailField.text != "", passwordField.text != "", confirmPwField.text != "" else {return}
+        if nameField.text == "" || emailField.text == "" || passwordField.text == "" || confirmPwField.text == "" {
+            
+            emptyError()
+        }
+        
+        if (passwordField.text?.characters.count)! < 6 {
+            incorrectError()
+        }
+        
         if passwordField.text == confirmPwField.text {
             FIRAuth.auth()?.createUser(withEmail: emailField.text!, password: passwordField.text!, completion: {
                 (user, error) in
@@ -104,31 +117,48 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
             })
             
         } else {
-            print("Password does not match")
-        }
+            incorrectError()
+        }  
         
-        // check if commit works with readme added
-        
-        
-        
-        
-        
-        
-    }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    @IBAction func cancelPressed(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
-    */
+    
+    func emptyError() {
+        let errorAlert = UIAlertController(title: "Error", message: "Email and/or password not filled in.", preferredStyle: UIAlertControllerStyle.alert)
+        errorAlert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil))
+        
+        self.present(errorAlert, animated: true, completion: nil)
+    }
+    
+    func incorrectError() {
+        let errorAlert = UIAlertController(title: "Error", message: "Password and confirmed password do not match and/or password must be at least 6 characters", preferredStyle: UIAlertControllerStyle.alert)
+        errorAlert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil))
+        
+        self.present(errorAlert, animated: true, completion: nil)
+    }
+    
+    // Keyboard functions:
+    func keyboardWillShow(notification: NSNotification) {
+        
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0{
+                self.view.frame.origin.y -= keyboardSize.height
+            }
+        }
+        
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y != 0{
+                self.view.frame.origin.y += keyboardSize.height
+            }
+        }
+    }
+
 
 }

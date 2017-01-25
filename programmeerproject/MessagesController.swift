@@ -34,16 +34,22 @@ class MessagesController: UITableViewController {
     let cellId = "cellId"
     
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "menu_icon") , style: .plain, target: self.revealViewController(), action: Selector("revealToggle:"))
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.black
         
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         
         let image = UIImage(named: "new_message_icon")
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(handleNewMessage))
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.black
+        
+        self.tableView.backgroundColor = UIColor.groupTableViewBackground
         
         checkIfUserIsLoggedIn()
         
@@ -52,6 +58,8 @@ class MessagesController: UITableViewController {
         
         tableView.allowsMultipleSelectionDuringEditing = true
     }
+    
+ 
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
@@ -165,6 +173,10 @@ class MessagesController: UITableViewController {
         cell.message = message
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = UIColor.clear
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

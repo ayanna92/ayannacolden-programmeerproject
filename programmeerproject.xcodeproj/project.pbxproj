@@ -258,7 +258,6 @@
 				55AE65721E2EA372003BCC35 /* UserMessages.swift */,
 				55275CDE1E28042C00456990 /* Message.swift */,
 				55EE83871E2FB630004B3192 /* Post.swift */,
-				55AC9B151E30FDF0005D7BE7 /* Contract.swift */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -276,6 +275,7 @@
 		55AE65761E2F8BB9003BCC35 /* Old Swift Files */ = {
 			isa = PBXGroup;
 			children = (
+				55AC9B151E30FDF0005D7BE7 /* Contract.swift */,
 				55275CD41E2633F800456990 /* UploadViewController.swift */,
 				55F2A08F1E37902800FE7AEB /* ContractsTableViewController.swift */,
 				55275CD61E26680900456990 /* ChatViewController.swift */,

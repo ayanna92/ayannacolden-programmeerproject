@@ -22,6 +22,11 @@ class NewMessagesController: UITableViewController {
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
         
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.black
+        
+        self.tableView.backgroundColor = UIColor.groupTableViewBackground
+        
+        
         followingUsers()
         
         tableView.register(UserMessageCell.self, forCellReuseIdentifier: cellId)
@@ -97,6 +102,10 @@ class NewMessagesController: UITableViewController {
         }
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = UIColor.clear
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

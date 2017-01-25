@@ -20,6 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
     
+    var disclaimerHasBeenDisplayed = false
+    
     func showActivityIndicator() {
         if let window = window {
             container = UIView()
