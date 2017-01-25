@@ -58,3 +58,6 @@
 * Trying to maybe think of changing these last parts of app drastically (making it a more social media forum for example), I could maybe create a news feed that can only be seen by two users? In a way displaying a contract...
 * Only have two more days and I'm freaking out.
 
+## Day 17 (Wed):
+* Working on newsfeed between two users, using instagram like app ep 4. Trying to retrieve from firebase, but seems to be problem with collectionview.reloaddata saying the link is ambiguous. So I need to figure out if this is because of storyboard link problems, or due to something else. 
+
