@@ -33,33 +33,30 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
     }
     
-    // RETRIEVE PROFILE PHOTO USER, EDIT NEEDED!
-    func fetchProfileImg() {
+    
+    func fetch() {
         let ref = FIRDatabase.database().reference()
+        
+        // Retrieve profile pictures.
         ref.child("users").queryOrderedByKey().observeSingleEvent(of: .value, with: { (snapshot) in
             
             let users = snapshot.value as! [String: AnyObject]
             
             DispatchQueue.main.async {
-             
-            for (_, value) in users {
-                if let uid = value["uid"] as? String {
-                    let userToShow = UserMessages()
-                    if let imagePath = value["urlToImage"] as? String {
-                        userToShow.urlToImage = imagePath
-                        self.userMessages.append(userToShow)
+                
+                for (_, value) in users {
+                    if let uid = value["uid"] as? String {
+                        let userToShow = UserMessages()
+                        if let imagePath = value["urlToImage"] as? String {
+                            userToShow.urlToImage = imagePath
+                            self.userMessages.append(userToShow)
+                        }
                     }
                 }
             }
-            self.collectionView.reloadData()
-            }
         })
-        ref.removeAllObservers()
-    }
-    
-    func fetch() {
-        let ref = FIRDatabase.database().reference()
         
+        // Retrieve images sent in chats, for feed.
         ref.child("message_images").observe(.childAdded, with: { (snap) in
             
             let key = snap.key
