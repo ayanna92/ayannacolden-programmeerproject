@@ -12,10 +12,18 @@ class Post: NSObject {
     
     
     var author: String!
-    var likes: Int!
+    var toId: String!
     var pathToImage: String!
     var userID: String!
     var postID: String!
     
-    
+//    init(dictionary: [String: AnyObject]) {
+//        super.init()
+//        
+//        author = dictionary["author"] as? String
+//        toId = dictionary["toId"] as? String
+//        pathToImage = dictionary["pathToImage"] as? String
+//        userID = dictionary["userID"] as? String
+//        postID = dictionary["postID"] as? String
+//    }
 }

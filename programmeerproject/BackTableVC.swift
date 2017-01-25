@@ -28,6 +28,41 @@ class BackTableVC: UITableViewController {
         return cell
     }
     
+//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        print(indexPath.row)
+//        if indexPath.row == 4 {
+//            
+//            AppDelegate.instance().switchRootViewController(rootViewController: MessagesController(), animated: true, completion: nil)
+//            
+//
+////            self.navigationController?.pushViewController(MessagesController(), animated: true)
+//            
+////            let navController = UINavigationController(rootViewController: MessagesController())
+////                    present(navController, animated: true, completion: nil)
+//        }
+//    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if (segue.identifier == "messageSegue") {
+//            let navigationVC = segue.destination as? UINavigationController
+//            let destinationVC = navigationVC?.viewControllers.first as! MessagesController
+//            present(destinationVC, animated:true, completion: nil)
+//            
+//        }
+        if segue.identifier == "messageSegue" {
+            
+            let messageVC = MessagesController()
+            revealViewController().setFront(messageVC, animated: true)
+            
+        }
+        
+        if segue.identifier == "newMessageSegue" {
+            let newMessageVC = NewMessagesController()
+            revealViewController().setFront(newMessageVC, animated: true)
+        }
+    }
+    
+
 //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 //        
 //        MessagesController().navigationController
@@ -40,7 +75,7 @@ class BackTableVC: UITableViewController {
 //            self.present(vc, animated: true, completion: nil)
 //        }
 //    }
-    
+
 
     
     

@@ -44,9 +44,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
     }
+    
+    func switchRootViewController(rootViewController: UIViewController, animated: Bool, completion: (() -> Void)?) {
+        if animated {
+            UIView.transition(with: window!, duration: 0.5, options: .transitionCrossDissolve, animations: {
+                let oldState: Bool = UIView.areAnimationsEnabled
+                UIView.setAnimationsEnabled(false)
+                self.window!.rootViewController = rootViewController
+                UIView.setAnimationsEnabled(oldState)
+            }, completion: { (finished: Bool) -> () in
+                if (completion != nil) {
+                    completion!()
+                }
+            })
+        } else {
+            window!.rootViewController = rootViewController
+        }
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+//        window = UIWindow(frame: UIScreen.main.bounds)
+//        let mainController = MessagesController() as UIViewController
+//        let navigationController = UINavigationController(rootViewController: mainController)
+//        navigationController.navigationBar.isTranslucent = false
+//        self.window?.rootViewController = navigationController
+//        self.window?.makeKeyAndVisible()
         
         FIRApp.configure()
         return true

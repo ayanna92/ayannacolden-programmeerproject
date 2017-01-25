@@ -203,10 +203,13 @@ class MessagesController: UITableViewController {
     func handleNewMessage() {
         let newMessageController = NewMessagesController()
         newMessageController.messagesController = self
-//        let navController = UINavigationController(rootViewController: newMessageController)
-//        
-//        present(navController, animated: true, completion: nil)
-        self.navigationController?.pushViewController(newMessageController, animated: true)
+        let navController = UINavigationController(rootViewController: newMessageController)
+        
+        present(navController, animated: true, completion: nil)
+//         self.navigationController?.pushViewController(newMessageController, animated: true)
+        
+        
+        
     }
     
     func checkIfUserIsLoggedIn() {
@@ -292,6 +295,20 @@ class MessagesController: UITableViewController {
         let chatLogController = ChatController(collectionViewLayout: UICollectionViewFlowLayout())
         chatLogController.user = user
         navigationController?.pushViewController(chatLogController, animated: true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let chatLogController = ChatController(collectionViewLayout: UICollectionViewFlowLayout())
+        
+        var userMake = (FIRAuth.auth()?.currentUser?.displayName)!
+        var userReceive = (chatLogController.user?.fullname)!
+        print(userMake)
+        
+        let destinationVC = segue.destination as! ContractViewController
+        destinationVC.userMake = userMake
+        destinationVC.userReceive = userReceive
+        
     }
     
     func handleLogout() {

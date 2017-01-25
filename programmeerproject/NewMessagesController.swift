@@ -18,7 +18,12 @@ class NewMessagesController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
+//        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "menu_icon") , style: .plain, target: self.revealViewController(), action: Selector("revealToggle:"))
+        
+//        self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        
         followingUsers()
         tableView.register(UserMessageCell.self, forCellReuseIdentifier: cellId)
         
@@ -116,10 +121,20 @@ class NewMessagesController: UITableViewController {
     
     var messagesController: MessagesController?
     
+    func showChatControllerForUser(_ user: UserMessages) {
+        let chatLogController = ChatController(collectionViewLayout: UICollectionViewFlowLayout())
+        chatLogController.user = user
+//        present(chatLogController, animated: true, completion: nil)
+        navigationController?.popToViewController(chatLogController, animated: true)
+//        navigationController?.pushViewController(chatLogController, animated: true)
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         dismiss(animated: true) {
             print("Dismiss completed")
             let user = self.users[(indexPath as NSIndexPath).row]
+            print(user.fullname)
+//            self.showChatControllerForUser(user)
             self.messagesController?.showChatControllerForUser(user)
         }
     }

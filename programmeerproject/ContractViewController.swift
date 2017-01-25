@@ -27,12 +27,18 @@ class ContractViewController: UIViewController, UIImagePickerControllerDelegate,
     
     var chatController: ChatController?
     var buttonIndex = Int()
+    var userMake: String!
+    var userReceive: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         pickerLeft.delegate = self
         pickerRight.delegate = self
+        
+        
+        self.userOneLabel.text = self.userMake
+        self.userTwoLabel.text = self.userReceive
         
         
         open.target = self.revealViewController()

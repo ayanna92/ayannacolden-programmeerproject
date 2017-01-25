@@ -13,6 +13,8 @@ import AVFoundation
 
 class ChatController: UICollectionViewController, UITextFieldDelegate, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    var contractViewController: ContractViewController?
+    
     var user: UserMessages? {
         didSet {
             navigationItem.title = user?.fullname
@@ -82,13 +84,37 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     }()
     
     // Function to go to make contract view.
-    func makeContract() {
-//        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "contractVc")
+    func makeContract(_ user: UserMessages) {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "contractVc") as UIViewController
         
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "sideTable")
-        
-        self.present(vc, animated: true, completion: nil)
+//        let chatLogController = ChatController(collectionViewLayout: UICollectionViewFlowLayout())
+//        chatLogController.user = user
+//        
+//        
+//        
+//        self.contractViewController?.userMake = (FIRAuth.auth()?.currentUser?.displayName)!
+//        
+//        self.contractViewController?.userReceive = (chatLogController.user?.fullname)!
+//        print(ContractViewController().userMake)
+//        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "sideTable")
+//        performSegue(withIdentifier: "chatContract", sender: self)
+        navigationController?.pushViewController(vc, animated: true)
+        //self.present(vc, animated: true, completion: nil)
         // performSegue(withIdentifier: "makeContract", sender: present)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let chatLogController = ChatController(collectionViewLayout: UICollectionViewFlowLayout())
+        
+        var userMake = (FIRAuth.auth()?.currentUser?.displayName)!
+        var userReceive = (chatLogController.user?.fullname)!
+        print(userMake)
+        
+        let destinationVC = segue.destination as! ContractViewController
+        destinationVC.userMake = userMake
+        destinationVC.userReceive = userReceive
+    
     }
     
     func handleUploadTap() {
