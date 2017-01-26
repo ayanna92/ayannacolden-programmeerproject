@@ -36,6 +36,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         ref.child("users").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
             
+            AppDelegate.instance().showActivityIndicator()
             let users = snapshot.value as! [String : AnyObject]
             self.userMessages.removeAll()
             for (_, value) in users {
@@ -52,6 +53,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 }
             }
             self.tableview.reloadData()
+            AppDelegate.instance().dismissActivityIndicator()
         })
         ref.removeAllObservers()
         

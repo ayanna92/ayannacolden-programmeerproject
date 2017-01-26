@@ -25,13 +25,10 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         navigationItem.title = "Feed"
         
-        self.userMessages.removeAll()
-        self.posts.removeAll()
 
-        fetch()
+//        fetch()
+        fetchWithProfile()
         
-        self.userMessages.removeAll()
-        self.posts.removeAll()
         
         open.target = self.revealViewController()
         open.action = Selector("revealToggle:")
@@ -41,11 +38,9 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
     }
     
-    // ASK WHY IS NOT RELOADING PROPERLY
-    func fetch() {
+    func fetchUsers() {
+        
         let ref = FIRDatabase.database().reference()
-//        self.userMessages.removeAll()
-//        self.posts.removeAll()
         
         // Retrieve profile pictures.
         ref.child("users").queryOrderedByKey().observeSingleEvent(of: .value, with: { (snapshot) in
@@ -56,7 +51,7 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
             DispatchQueue.main.async {
                 
                 for (_, value) in users {
-                    if let uid = value["uid"] as? String {
+                    if let id = value["uid"] as? String {
                         let userToShow = UserMessages()
                         if let imagePath = value["urlToImage"] as? String {
                             userToShow.urlToImage = imagePath
@@ -65,10 +60,120 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
                     }
                 }
                 
-                 //self.collectionView.reloadData()
+                self.collectionView.reloadData()
             }
             //ref.removeAllObservers()
         })
+        
+    }
+    
+    func fetchWithProfile() {
+        
+        let ref = FIRDatabase.database().reference()
+        let uid = FIRAuth.auth()?.currentUser?.uid
+        
+        
+        ref.child("users").queryOrderedByKey().observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            let users = snapshot.value as! [String: AnyObject]
+            for (_, value) in users {
+                let id = value["uid"] as! String
+                
+                // Retrieve images sent in chats, for feed.
+                ref.child("message_images").observe(.childAdded, with: { (snap) in
+                    
+                    let key = snap.key
+                    
+                    if let dict = snap.value as? [String: AnyObject] {
+                        
+                        let uid = FIRAuth.auth()?.currentUser?.uid as? String!
+                        ref.child("message_images").child(key).observeSingleEvent(of: .value, with: { (snapshot) in
+                            
+                            if let dictionary = snapshot.value as? [String: AnyObject] {
+                                
+                                if let userID = dictionary["userID"] as? String, let toId = dictionary["toId"] as? String{
+                                    
+                                    
+                                    
+                                    if toId == uid || userID == uid {
+                                        if id == userID {
+                                        
+                                        DispatchQueue.main.async(execute: {
+                                            
+                                            let posst = Post()
+                                            let userToShow = UserMessages()
+                                            if let author = dictionary["author"] as? String, let pathToImage = dictionary["pathToImage"] as? String, let postID = dictionary["postID"] as? String, let imagePath = value["urlToImage"] as? String {
+                                                
+                                                posst.author = author
+                                                posst.pathToImage = pathToImage
+                                                posst.postID = postID
+                                                posst.userID = userID
+                                                posst.toId = toId
+                                                userToShow.urlToImage = imagePath
+                                                
+                                                print("image:\(posst.pathToImage)")
+                                                
+                                                self.posts.append(posst)
+                                                self.userMessages.append(userToShow)
+                                                
+                                            }
+                                            
+                                            self.collectionView.reloadData()
+                                            
+                                        })
+                                        //self.posts.removeAll()
+                                        //self.userMessages.removeAll()
+                                    }
+                                    }
+                                }
+                                
+                            }
+                            
+                        })
+                    }
+                })
+                ref.removeAllObservers()
+
+                
+            }
+        })
+        
+        
+    
+    
+    }
+    
+    
+    // ASK WHY IS NOT RELOADING PROPERLY
+    func fetch() {
+        let ref = FIRDatabase.database().reference()
+      
+        //self.userMessages.removeAll()
+        self.posts.removeAll()
+        
+        ref.child("users").queryOrderedByKey().observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            let users = snapshot.value as! [String: AnyObject]
+            print("users: \(users)")
+            DispatchQueue.main.async {
+                
+                for (_, value) in users {
+                    if let id = value["uid"] as? String {
+                            
+                            
+                            let userToShow = UserMessages()
+                            if let imagePath = value["urlToImage"] as? String {
+                                userToShow.urlToImage = imagePath
+                                self.userMessages.append(userToShow)
+                            }
+                        }
+                }
+                
+                self.collectionView.reloadData()
+            }
+            //ref.removeAllObservers()
+        })
+        
         
         // Retrieve images sent in chats, for feed.
         ref.child("message_images").observe(.childAdded, with: { (snap) in
@@ -83,8 +188,12 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
                         if let dictionary = snapshot.value as? [String: AnyObject] {
 
                             if let userID = dictionary["userID"] as? String, let toId = dictionary["toId"] as? String{
-                                    if toId == uid || userID == uid {
-                                        DispatchQueue.main.async(execute: {
+                                
+                               
+                                
+                                if toId == uid || userID == uid {
+      
+                                    DispatchQueue.main.async(execute: {
                                             
                                         let posst = Post()
                                         if let author = dictionary["author"] as? String, let pathToImage = dictionary["pathToImage"] as? String, let postID = dictionary["postID"] as? String {
@@ -103,7 +212,7 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
                                             
                                             self.collectionView.reloadData()
                                             
-                                        })
+                                    })
                                         //self.posts.removeAll()
                                         //self.userMessages.removeAll()
                                 }

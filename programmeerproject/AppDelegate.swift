@@ -11,6 +11,8 @@ import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    var disclaimerHasBeenDisplayed = false
 
     var window: UIWindow?
     var actIdc = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
@@ -19,8 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     class func instance() -> AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
-    
-    var disclaimerHasBeenDisplayed = false
     
     func showActivityIndicator() {
         if let window = window {

@@ -21,7 +21,22 @@ class LoginViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
+        let image = UIImage(named: "images")
+        let transparentImage = image?.image(alpha: 0.5)
+        self.view.backgroundColor = UIColor(patternImage: transparentImage!)
 
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+
+        
+//        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "images")?.draw(at: CGPoint.zero, blendMode: .normal, alpha: 0.5))
+        
+        let image = UIImage(named: "images")
+        let transparentImage = image?.image(alpha: 0.5)
+        self.view.backgroundColor = UIColor(patternImage: transparentImage!)
+        
     }
 
     @IBAction func loginPressed(_ sender: Any) {
@@ -85,4 +100,14 @@ extension UIColor {
         self.init(red: r/255, green: g/255, blue: b/255, alpha: 1)
     }
     
+}
+
+extension UIImage {
+    func image(alpha: CGFloat) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(size, false, scale)
+        draw(at: CGPoint.zero, blendMode: .normal, alpha: alpha)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
+    }
 }
