@@ -1,5 +1,7 @@
 # ayannacolden-finalproject
 
+[![BCH compliance](https://bettercodehub.com/edge/badge/ayanna92/ayannacolden-programmeerproject)](https://bettercodehub.com)
+
 # Project Proposal
 ### Ayanna J. Colden
 
