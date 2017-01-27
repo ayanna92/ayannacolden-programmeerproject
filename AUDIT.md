@@ -1,43 +1,43 @@
 ![ScreenShot](https://raw.github.com/ayanna92/ayannacolden-programmeerproject/master/doc/Screen Shot 2017-01-27 at 15.51.21.png)
 
-##Write Short Units of Code
-*FeedViewController.fetch()
+## Write Short Units of Code
+* FeedViewController.fetch()
 
-##Write Simple Units of Code
-*FeedViewController.fetch()
+## Write Simple Units of Code
+* FeedViewController.fetch()
 
-##Write Code Once
-*ContractViewController.swift
-  *ContractViewController.swift
+## Write Code Once
+* ContractViewController.swift
+  * ContractViewController.swift
 
-*MessageCell.swift
-  *UserMessageCell.swift
+* MessageCell.swift
+  * UserMessageCell.swift
 
-*ChatController.swift
-  *ChatLogController.swift
+* ChatController.swift
+  * ChatLogController.swift
 
-*ChatController.swift
-  *MessagesController.swift
+* ChatController.swift
+  * MessagesController.swift
 
-*FeedViewController.swift
-  *FeedViewController.swift
+* FeedViewController.swift
+  * FeedViewController.swift
 
-*FeedViewController.swift
-  *FeedViewController.swift
+* FeedViewController.swift
+  * FeedViewController.swift
 
-*LoginViewController.swift
-  *SignupViewController.swift
+* LoginViewController.swift
+  * SignupViewController.swift
 
-##Keep Unit Interfaces Small
-*AppDelegate.switchRootViewController(UIViewController,Bool,(()->Void)?)
+## Keep Unit Interfaces Small
+* AppDelegate.switchRootViewController(UIViewController,Bool,(()->Void)?)
 
-##Write Clean Code
-*ChatController.swift
-*ChatController.swift
-*ChatMessageCell.swift
-*ContractViewController.swift
-*LoginViewController.swift
-*MessagesController.swift
-*MessagesController.swift
-*MessagesController.swift
-*NewNavViewController.swift
+## Write Clean Code
+* ChatController.swift
+* ChatController.swift
+* ChatMessageCell.swift
+* ContractViewController.swift
+* LoginViewController.swift
+* MessagesController.swift
+* MessagesController.swift
+* MessagesController.swift
+* NewNavViewController.swift
