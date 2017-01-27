@@ -1,4 +1,4 @@
-![ScreenShot](https://raw.github.com/ayanna92/ayannacolden-programmeerproject/master/doc/homepage:chatroom.png)
+![ScreenShot](https://raw.github.com/ayanna92/ayannacolden-programmeerproject/master/doc/Screen Shot 2017-01-27 at 15.51.21.png)
 
 ##Write Short Units of Code
 *FeedViewController.fetch()
