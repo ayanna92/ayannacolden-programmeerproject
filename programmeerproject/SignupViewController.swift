@@ -27,6 +27,10 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
+        self.navigationController?.navigationBar.isHidden = false
+        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
 
@@ -36,6 +40,15 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         ref = FIRDatabase.database().reference()
         userStorage = storage.child("users")
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        let image = UIImage(named: "images-2")
+        let transparentImage = image?.image(alpha: 0.5)
+        self.view.backgroundColor = UIColor(patternImage: transparentImage!)
+        
     }
     
     
@@ -123,9 +136,6 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     
-    @IBAction func cancelPressed(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
-    }
     
     func emptyError() {
         let errorAlert = UIAlertController(title: "Error", message: "Email and/or password not filled in.", preferredStyle: UIAlertControllerStyle.alert)

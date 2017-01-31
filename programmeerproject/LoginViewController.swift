@@ -19,12 +19,10 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.navigationBar.isHidden = true
+        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        
-        let image = UIImage(named: "images")
-        let transparentImage = image?.image(alpha: 0.5)
-        self.view.backgroundColor = UIColor(patternImage: transparentImage!)
 
     }
     
@@ -33,7 +31,7 @@ class LoginViewController: UIViewController {
         
 //        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "images")?.draw(at: CGPoint.zero, blendMode: .normal, alpha: 0.5))
         
-        let image = UIImage(named: "images")
+        let image = UIImage(named: "images-2")
         let transparentImage = image?.image(alpha: 0.5)
         self.view.backgroundColor = UIColor(patternImage: transparentImage!)
         
