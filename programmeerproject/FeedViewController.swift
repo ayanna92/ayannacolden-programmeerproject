@@ -17,11 +17,13 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
     @IBOutlet weak var collectionView: UICollectionView!
     
     
+    
     var posts = [Post]()
     var userMessages = [UserMessages]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         navigationItem.title = "Feed"
 
@@ -102,7 +104,6 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         })
     
     }
-    
 
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -123,7 +124,7 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: "postCell", for: indexPath) as! PostCell
         cell.postImage.downloadImage(from: self.posts[indexPath.row].pathToImage!)
         cell.authorLabel.text = self.posts[indexPath.row].author
-        cell.receiverLabel.text = self.userMessages[indexPath.row].fullname
+        cell.receiverLabel.text = "Sent to: \(self.userMessages[indexPath.row].fullname!)"
         cell.profileImage.downloadImage(from: self.userMessages[indexPath.row].urlToImage)
         
         return cell

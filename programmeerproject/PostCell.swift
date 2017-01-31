@@ -14,6 +14,5 @@ class PostCell: UICollectionViewCell {
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var receiverLabel: UILabel!
-    @IBOutlet weak var numImageLabel: UILabel!
     
 }

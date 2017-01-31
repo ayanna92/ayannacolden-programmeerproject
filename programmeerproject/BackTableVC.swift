@@ -18,12 +18,12 @@ class BackTableVC: UITableViewController {
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        let image = UIImage(named: "images-2")
-        let transparentImage = image?.image(alpha: 0.5)
-        self.view.backgroundColor = UIColor(patternImage: transparentImage!)
-        
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        let image = UIImage(named: "images-2")
+//        let transparentImage = image?.image(alpha: 0.5)
+//        self.view.backgroundColor = UIColor(patternImage: transparentImage!)
+//        
+//    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tableArray.count

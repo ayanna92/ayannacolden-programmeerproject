@@ -9,17 +9,24 @@
 import UIKit
 import Firebase
 
-class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 
     
     @IBOutlet weak var open: UIBarButtonItem!
     @IBOutlet weak var tableview: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    let searchController = UISearchController(searchResultsController: nil)
 
-    var user = [User]()
     var userMessages = [UserMessages]()
+    var filteredUser = [UserMessages]()
+    var isSearching = false
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.hideKeyboard()
         
         navigationItem.title = "M.A.D. Users"
         retrieveUsers()
@@ -28,6 +35,9 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
         open.action = Selector("revealToggle:")
         
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        searchBar.delegate = self
+        //filteredUser = userMessages
+        
     }
     
     
@@ -66,16 +76,24 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableview.dequeueReusableCell(withIdentifier: "userCell", for: indexPath) as! UserCell
         
-        cell.nameLabel.text = self.userMessages[indexPath.row].fullname
-        cell.userID = self.userMessages[indexPath.row].uid
-        cell.userImage.downloadImage(from: self.userMessages[indexPath.row].urlToImage!)
-        checkFollowing(indexPath: indexPath)
+        if isSearching == true {
+            cell.userID = self.filteredUser[indexPath.row].uid
+            cell.nameLabel.text = self.filteredUser[indexPath.row].fullname
+            cell.userImage.downloadImage(from: self.filteredUser[indexPath.row].urlToImage!)
+        } else {
+            cell.userID = self.userMessages[indexPath.row].uid
+            cell.nameLabel.text = self.userMessages[indexPath.row].fullname
+            cell.userImage.downloadImage(from: self.userMessages[indexPath.row].urlToImage!)
+        }
+        
+        checkFollowing(indexPath: indexPath, isSearching: isSearching)
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return userMessages.count ?? 0
+        //return userMessages.count ?? 0
+        return isSearching ? filteredUser.count: userMessages.count
     }
     
     
@@ -85,47 +103,58 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let ref = FIRDatabase.database().reference()
         let key = ref.child("users").childByAutoId().key
         
+        let array = isSearching ? self.filteredUser : self.userMessages
+        
         var isFollower = false
         
         ref.child("users").child(uid).child("following").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
             
             if let following = snapshot.value as? [String : AnyObject] {
                 for (ke, value) in following {
-                    if value as! String == self.userMessages[indexPath.row].uid {
+                    if value as! String == array[indexPath.row].uid {
                         isFollower = true
                         
                         ref.child("users").child(uid).child("following/\(ke)").removeValue()
-                        ref.child("users").child(self.userMessages[indexPath.row].uid!).child("followers/\(ke)").removeValue()
+                        ref.child("users").child(array[indexPath.row].uid!).child("followers/\(ke)").removeValue()
                         
                         self.tableview.cellForRow(at: indexPath)?.accessoryType = .none
                     }
+                    //self.tableview.reloadData()
                 }
             }
             if !isFollower {
-                let following = ["following/\(key)" : self.userMessages[indexPath.row].uid]
+                let following = ["following/\(key)" : array[indexPath.row].uid]
                 print("following: \(following)")
                 let followers = ["followers/\(key)" : uid]
                 
                 ref.child("users").child(uid).updateChildValues(following)
-                ref.child("users").child(self.userMessages[indexPath.row].uid!).updateChildValues(followers)
+                ref.child("users").child(array[indexPath.row].uid!).updateChildValues(followers)
                 
                 self.tableview.cellForRow(at: indexPath)?.accessoryType = .checkmark
             }
+            
         })
         ref.removeAllObservers()
+        tableview.deselectRow(at: indexPath, animated: true)
+       //self.tableview.reloadData()
         
     }
     
     
-    func checkFollowing(indexPath: IndexPath) {
+    func checkFollowing(indexPath: IndexPath, isSearching: Bool) {
         let uid = FIRAuth.auth()!.currentUser!.uid
         let ref = FIRDatabase.database().reference()
         
         ref.child("users").child(uid).child("following").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
             
-            if let following = snapshot.value as? [String : AnyObject] {
+            if let following = snapshot.value as? [String: AnyObject] {
                 for (_, value) in following {
-                    if value as! String == self.userMessages[indexPath.row].uid {
+                    
+                    var array = isSearching ? self.filteredUser: self.userMessages
+                    if array.count == 0 {
+                        return
+                    }
+                    if value as! String == array[indexPath.row].uid {
                         self.tableview.cellForRow(at: indexPath)?.accessoryType = .checkmark
                     }
                 }
@@ -133,35 +162,39 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
         })
         ref.removeAllObservers()
         
+        
+    }
+    
+   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    //retrieveUsers()
+    filteredUser = searchText.isEmpty ? userMessages : userMessages.filter({(dataString: UserMessages) -> Bool in
+        // If dataItem matches the searchText, return true to include it
+        return dataString.fullname?.range(of: searchText, options: .caseInsensitive) != nil
+    })
+    
+    tableview.reloadData()
+    
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        isSearching = true
+        self.searchBar.showsCancelButton = true
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        isSearching = false
+        searchBar.showsCancelButton = false
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
+        tableview.reloadData()
     }
     
     // removed segue here (need to see if able to use something else
     @IBAction func logOutPressed(_ sender: Any) {
     }
-    
+   
 }
 
 
-extension UIImageView {
-    
-    func downloadImage(from imgURL: String!) {
-        let url = URLRequest(url: URL(string: imgURL)!)
-        
-        let task = URLSession.shared.dataTask(with: url) {
-            (data, response, error) in
-            
-            if error != nil {
-                print(error!)
-                return
-            }
-            
-            DispatchQueue.main.async {
-                self.image = UIImage(data: data!)
-            }
-            
-        }
-        
-        task.resume()
-    }
-}
+
     
