@@ -75,3 +75,8 @@
 * Added keyboard Swipe away to controllers
 * Need to show add sent messages count between users to news feed, been working on it
 * And want to find a way to retrieve username of receiving user of photo from firebase
+
+# Week 4
+## Day 22 (Mon): 
+* Finally worked out how to retrieve who photos are sent to from firebase and put it in my newsfeed
+* Now going to make newsfeed look pretty, because it is very plain atm.
