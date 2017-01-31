@@ -64,3 +64,14 @@
 * Need to edit proposal, as now my app implementation has been changed quite a bit
 * And need to get on finally making app prettier
 
+## Day 18 (Thu):
+* Worked on layout of app
+* Added alert messages to login and signup in case of errors
+* fixed loading list not showing completely sometimes
+* added profile photo and username to newsfeed pictures, still need to add name receiving user and count
+
+## Day 19 (Fri): 
+* Fixed an animation bug when going from login to signup view controller, it would show the previous controller in the background. 
+* Added keyboard Swipe away to controllers
+* Need to show add sent messages count between users to news feed, been working on it
+* And want to find a way to retrieve username of receiving user of photo from firebase
