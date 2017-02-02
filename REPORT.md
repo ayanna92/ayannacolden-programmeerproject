@@ -1,6 +1,6 @@
-# Report, Ayanna J. Colden
+# Mutually Assured Destruction
+## Report, Ayanna J. Colden
 
-## Mutually Assured Destruction
 Mutually assured destruction (M.A.D.) is a social media app, which focuses on the sharing of embarrassing photos between friends. The idea is to have a safe platform for friends to enjoy embarrassing photos they’ve made of one another without it being displayed on bigger social media platforms such as facebook/twitter/instagram etc. M.A.D.’s newsfeed therefore only contains images that users have sent themselves or images that they’ve personally received. 
 
 ![ScreenShot](https://raw.github.com/ayanna92/ayannacolden-programmeerproject/master/doc/Screen Shot 2017-02-02 at 11.17.59.png)
@@ -16,7 +16,7 @@ Mutually assured destruction (M.A.D.) is a social media app, which focuses on th
 ## Design
 ![ScreenShot](https://raw.github.com/ayanna92/ayannacolden-programmeerproject/master/doc/EndDesign3.png)
 
-##### Design Decisions
+#### Design Decisions
 
 Changes since design.md document week 1
 * I decided to not give users a profile page (ProfileVC), this appeared to be unnecessary next the newsfeed which displays all photos and the chat in which users can communicate with others. A profile page wouldn’t have much added value.
