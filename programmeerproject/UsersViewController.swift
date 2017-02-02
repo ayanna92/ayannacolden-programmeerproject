@@ -22,9 +22,58 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var filteredUser = [UserMessages]()
     var isSearching = false
 
+    func didSelectCell(sender: UITapGestureRecognizer){
+        
+        if let indexPath = tableview.indexPathForRow(at: sender.location(in: self.tableview)) {
+            if let _ = tableview.cellForRow(at: indexPath) as? UserCell {
+                let uid = FIRAuth.auth()!.currentUser!.uid
+                let ref = FIRDatabase.database().reference()
+                let key  = ref.child("users").childByAutoId().key
+                
+                let array = isSearching ? self.filteredUser : self.userMessages
+                
+                var isFollower = false
+                
+                ref.child("users").child(uid).child("following").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
+                    
+                    if let following = snapshot.value as? [String : AnyObject] {
+                        for (ke, value) in following {
+                            if value as! String == array[indexPath.row].uid {
+                                isFollower = true
+                                
+                                ref.child("users").child(uid).child("following/\(ke)").removeValue()
+                                ref.child("users").child(array[indexPath.row].uid!).child("followers/\(ke)").removeValue()
+                                
+                                self.tableview.cellForRow(at: indexPath)?.accessoryType = .none
+                            }
+                            //self.tableview.reloadData()
+                        }
+                    }
+                    if !isFollower {
+                        let following = ["following/\(key)" : array[indexPath.row].uid]
+                        print("following: \(following)")
+                        let followers = ["followers/\(key)" : uid]
+                        
+                        ref.child("users").child(uid).updateChildValues(following)
+                        ref.child("users").child(array[indexPath.row].uid!).updateChildValues(followers)
+                        
+                        self.tableview.cellForRow(at: indexPath)?.accessoryType = .checkmark
+                    }
+                    
+                })
+                ref.removeAllObservers()
+                tableview.deselectRow(at: indexPath, animated: true)
+                //self.tableview.reloadData()
+            }
+        }
+        
+//        if let cell = tableview.cellForRow(at: <#T##IndexPath#>)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableview.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didSelectCell(sender:))))
         
         self.hideKeyboard()
         
@@ -40,7 +89,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         
         //filteredUser = userMessages
-        
+
     }
     
     
@@ -99,48 +148,46 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
         return isSearching ? filteredUser.count: userMessages.count
     }
     
-    
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let uid = FIRAuth.auth()!.currentUser!.uid
-        let ref = FIRDatabase.database().reference()
-        let key = ref.child("users").childByAutoId().key
-        
-        let array = isSearching ? self.filteredUser : self.userMessages
-        
-        var isFollower = false
-        
-        ref.child("users").child(uid).child("following").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
-            
-            if let following = snapshot.value as? [String : AnyObject] {
-                for (ke, value) in following {
-                    if value as! String == array[indexPath.row].uid {
-                        isFollower = true
-                        
-                        ref.child("users").child(uid).child("following/\(ke)").removeValue()
-                        ref.child("users").child(array[indexPath.row].uid!).child("followers/\(ke)").removeValue()
-                        
-                        self.tableview.cellForRow(at: indexPath)?.accessoryType = .none
-                    }
-                    //self.tableview.reloadData()
-                }
-            }
-            if !isFollower {
-                let following = ["following/\(key)" : array[indexPath.row].uid]
-                print("following: \(following)")
-                let followers = ["followers/\(key)" : uid]
-                
-                ref.child("users").child(uid).updateChildValues(following)
-                ref.child("users").child(array[indexPath.row].uid!).updateChildValues(followers)
-                
-                self.tableview.cellForRow(at: indexPath)?.accessoryType = .checkmark
-            }
-            
-        })
-        ref.removeAllObservers()
-        tableview.deselectRow(at: indexPath, animated: true)
-       //self.tableview.reloadData()
+    
+//        let uid = FIRAuth.auth()!.currentUser!.uid
+//        let ref = FIRDatabase.database().reference()
+//        let key  = ref.child("users").childByAutoId().key
+//        
+//        let array = isSearching ? self.filteredUser : self.userMessages
+//        
+//        var isFollower = false
+//        
+//        ref.child("users").child(uid).child("following").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
+//            
+//            if let following = snapshot.value as? [String : AnyObject] {
+//                for (ke, value) in following {
+//                    if value as! String == array[indexPath.row].uid {
+//                        isFollower = true
+//                        
+//                        ref.child("users").child(uid).child("following/\(ke)").removeValue()
+//                        ref.child("users").child(array[indexPath.row].uid!).child("followers/\(ke)").removeValue()
+//                        
+//                        self.tableview.cellForRow(at: indexPath)?.accessoryType = .none
+//                    }
+//                    //self.tableview.reloadData()
+//                }
+//            }
+//            if !isFollower {
+//                let following = ["following/\(key)" : array[indexPath.row].uid]
+//                print("following: \(following)")
+//                let followers = ["followers/\(key)" : uid]
+//                
+//                ref.child("users").child(uid).updateChildValues(following)
+//                ref.child("users").child(array[indexPath.row].uid!).updateChildValues(followers)
+//                
+//                self.tableview.cellForRow(at: indexPath)?.accessoryType = .checkmark
+//            }
+//            
+//        })
+//        ref.removeAllObservers()
+//        tableview.deselectRow(at: indexPath, animated: true)
+//       //self.tableview.reloadData()
         
     }
     
