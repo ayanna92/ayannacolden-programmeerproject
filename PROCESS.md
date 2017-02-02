@@ -87,4 +87,10 @@
 * However this if giving me problems with follow/unfollowing of users, and an index out of range issue!
 * Making last attempts of fixing this problem by asking for assistence tonight and tomorrow morning. If not I'll have to sadly scrap it and get back to code cleanup and writing of report/editing proposal etc. Enough left to do. 
 
+## Day 24 (Wed):
+* Had a colleague of a friend help me figure out the follow/unfollowing problem, we found that the tableview reloaded too quickly and then would grab an empty array, so added: "if array.count > indexPath.row" which is a bit of a workaround for this problem, that ensures the right array is selected.
+* Followers could only be selected by using a left swipe, due to an overlay problem. Managed to fix this by adding a didselectcell function with taprecognizer. And now users can be followed/unfollowed with just one tap.
+* App is now fully functioning, all that is left is report/readme/code cleaning
 
+## Day 25 (Thu):
+* Finally writing report, editing readme, and cleaning up code. Also need to add sourced to readme and code, and need to seriously get on writing comments. Wish I had been more alert doing this while writing code, but not much to be done about that now. 
