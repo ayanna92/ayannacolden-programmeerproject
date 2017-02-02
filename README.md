@@ -27,6 +27,7 @@ Imagine having an embarrassing photo being taken of you on a night out, or durin
   * User Image uploading from device and saving image in application 
   * User interaction should be possible (they need to be able to speak to one another in app) 
 
+Copyright {2017} {Ayanna J. Colden}
 
 ### Visualization idea examples
 ![ScreenShot](https://raw.github.com/ayanna92/ayannacolden-programmeerproject/master/doc/Screen Shot 2017-02-02 at 11.17.31.png)
