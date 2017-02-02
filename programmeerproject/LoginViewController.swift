@@ -43,11 +43,11 @@ class LoginViewController: UIViewController {
         }
         
         FIRAuth.auth()?.signIn(withEmail: emailField.text!, password: pwField.text!, completion: { (user, error) in
-            if let error = error {
+            if error != nil {
                 self.incorrectError()
             }
             
-            if let user = user {
+            if user != nil {
                 let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SWReveal")
                 
                 self.present(vc, animated: true, completion: nil)

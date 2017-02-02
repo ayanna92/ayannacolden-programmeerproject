@@ -59,7 +59,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     
                     if let following = snapshot.value as? [String : AnyObject] {
                         for (ke, value) in following {
-                            if value as! String == array[indexPath.row].uid {
+                            if value as? String == array[indexPath.row].uid {
                                 isFollower = true
                                 
                                 ref.child("users").child(uid).child("following/\(ke)").removeValue()
