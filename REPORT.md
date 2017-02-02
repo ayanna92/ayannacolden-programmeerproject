@@ -37,3 +37,6 @@ The main reason I stand behind the changes that I’ve implemented, are because 
 * Swipe menu was very much an aesthetic add as it was a practical one for me. When I saw it during one of the presentations I was so impressed by how professional it looked, that I had to figure out how to make one myself. 
 * My chat menu was is also exactly what I wanted visually, cause it reminds me of chats that I already use such as WhatsApp and Facebook Messenger. I feel like users will be pleased with this format, because it’s what they’re used to working with. 
 * I created the logo for M.A.D. myself in paint with use of a google camera image, because I felt like the camera represented clearly the pictures displayed and shared in the app. 
+
+![ScreenShot](https://raw.github.com/ayanna92/ayannacolden-programmeerproject/master/doc/Screen Shot 2017-02-02 at 11.17.47.png)
+![ScreenShot](https://raw.github.com/ayanna92/ayannacolden-programmeerproject/master/doc/Screen Shot 2017-02-02 at 11.19.24.png)
