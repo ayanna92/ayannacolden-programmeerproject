@@ -35,7 +35,7 @@ Imagine having an embarrassing photo being taken of you on a night out, or durin
 * Select programmeerproject.xcworkspace
 * Run project on iPhone 6/6s screen
 * For an example account you can use: 
-  * email: ayanna.colden@gmail.com
+  * email: edward@live.nl 
   * password: ayanna (this is not a real password to a real emailadress, so don't get your hopes up!)
   
 
