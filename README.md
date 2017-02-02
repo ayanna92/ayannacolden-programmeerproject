@@ -23,7 +23,7 @@ Imagine having an embarrassing photo being taken of you on a night out, or durin
   * New message page, where you see a list of followed users and can start a conversation with them
 
 * what external components (APIs) you probably need to make certain features possible
-  * Firebase for user login functionality 
+  * Firebase for user login and message/image storage functionality 
   * User Image uploading from device and saving image in application 
   * User interaction should be possible (they need to be able to speak to one another in app) 
 
