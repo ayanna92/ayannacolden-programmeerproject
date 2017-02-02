@@ -26,6 +26,14 @@ Imagine having an embarrassing photo being taken of you on a night out, or durin
   * Firebase for user login and message/image storage functionality 
   * User Image uploading from device and saving image in application 
   * User interaction should be possible (they need to be able to speak to one another in app) 
+  
+### Installation
+* Xcode 8.1 needed
+* Download github project
+* Go to project directory in terminal
+* Then enter: 'pod install'
+* Select programmeerproject.xcworkspace
+* Run project on iPhone 6/6s screen
 
 ### Visuals
 ![ScreenShot](https://raw.github.com/ayanna92/ayannacolden-programmeerproject/master/doc/Screen Shot 2017-02-02 at 11.17.31.png)
@@ -35,14 +43,6 @@ Imagine having an embarrassing photo being taken of you on a night out, or durin
 ![ScreenShot](https://raw.github.com/ayanna92/ayannacolden-programmeerproject/master/doc/Screen Shot 2017-02-02 at 11.18.40.png)
 ![ScreenShot](https://raw.github.com/ayanna92/ayannacolden-programmeerproject/master/doc/Screen Shot 2017-02-02 at 11.19.24.png)
 ![ScreenShot](https://raw.github.com/ayanna92/ayannacolden-programmeerproject/master/doc/Screen Shot 2017-02-02 at 11.19.58.png)
-
-### Installation
-* Xcode 8.1 needed
-* Download github project
-* Go to project directory in terminal
-* Then enter: 'pod install'
-* Select programmeerproject.xcworkspace
-* Run project on iPhone 6/6s screen
 
 ### Sources
 new message icon:
