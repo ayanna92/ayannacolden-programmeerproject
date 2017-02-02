@@ -205,7 +205,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     if array.count == 0 {
                         return
                     }
-                    // something wrong?
+    
                     if array.count > indexPath.row && value as? String == array[indexPath.row].uid {
                         self.tableview.cellForRow(at: indexPath)?.accessoryType = .checkmark
                     }
