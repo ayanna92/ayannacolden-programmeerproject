@@ -32,10 +32,13 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
         retrieveUsers()
         
         open.target = self.revealViewController()
+        searchBar.delegate = self
+        searchDisplayController?.searchResultsDelegate = self;
+        
         open.action = Selector("revealToggle:")
         
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-        searchBar.delegate = self
+        
         //filteredUser = userMessages
         
     }
@@ -97,6 +100,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let uid = FIRAuth.auth()!.currentUser!.uid
@@ -154,7 +158,8 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     if array.count == 0 {
                         return
                     }
-                    if value as! String == array[indexPath.row].uid {
+                    // something wrong?
+                    if array.count > indexPath.row && value as? String == array[indexPath.row].uid {
                         self.tableview.cellForRow(at: indexPath)?.accessoryType = .checkmark
                     }
                 }
