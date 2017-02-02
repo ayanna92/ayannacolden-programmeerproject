@@ -27,8 +27,6 @@ Imagine having an embarrassing photo being taken of you on a night out, or durin
   * User Image uploading from device and saving image in application 
   * User interaction should be possible (they need to be able to speak to one another in app) 
 
-Copyright {2017} {Ayanna J. Colden}
-
 ### Visualization idea examples
 ![ScreenShot](https://raw.github.com/ayanna92/ayannacolden-programmeerproject/master/doc/Screen Shot 2017-02-02 at 11.17.31.png)
 ![ScreenShot](https://raw.github.com/ayanna92/ayannacolden-programmeerproject/master/doc/Screen Shot 2017-02-02 at 11.17.47.png)
@@ -37,3 +35,33 @@ Copyright {2017} {Ayanna J. Colden}
 ![ScreenShot](https://raw.github.com/ayanna92/ayannacolden-programmeerproject/master/doc/Screen Shot 2017-02-02 at 11.18.40.png)
 ![ScreenShot](https://raw.github.com/ayanna92/ayannacolden-programmeerproject/master/doc/Screen Shot 2017-02-02 at 11.19.24.png)
 ![ScreenShot](https://raw.github.com/ayanna92/ayannacolden-programmeerproject/master/doc/Screen Shot 2017-02-02 at 11.19.58.png)
+
+### Sources
+new message icon:
+<a href="https://icons8.com/web-app/39117/New-Message">New message icon credits</a>
+
+camera icon:
+https://icons8.com/web-app/5376/camera
+
+newsfeed seperator line:
+https://www.google.nl/search?q=ios+separator+line+image&espv=2&biw=1329&bih=755&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiKy932ruzRAhXD2RoKHcQDBVoQ_AUIBigB#tbm=isch&q=line+image+png&imgrc=QzYEOwA2WYgfsM%3A
+
+Login/Signup Viewcontrollers:
+https://www.youtube.com/watch?v=AsSZulMc7sk
+
+Users Viewcontroller:
+follow/unfollow code
+https://www.youtube.com/watch?v=js3gHOuPb28&t=1763s
+
+Feed Viewcontroller:
+for general feed idea
+https://www.youtube.com/watch?v=fw7ySRFtX_M
+
+Chat/Messages/NewMessages ViewController:
+new messages (I applied only following users)
+https://www.letsbuildthatapp.com/course_video?id=402
+
+Login/Signup background:
+https://www.google.nl/search?q=iphone+backgrounds&espv=2&biw=1266&bih=710&tbm=isch&tbo=u&source=univ&sa=X&ved=0ahUKEwigxrCno_LRAhXCLsAKHSZgAyQQsAQIGQ#tbm=isch&q=cool+iphone+backgrounds&imgrc=RuVFOauRO0uSBM:
+
+Copyright {2017} {Ayanna J. Colden}
