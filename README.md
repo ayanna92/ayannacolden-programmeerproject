@@ -34,6 +34,10 @@ Imagine having an embarrassing photo being taken of you on a night out, or durin
 * Then enter: 'pod install'
 * Select programmeerproject.xcworkspace
 * Run project on iPhone 6/6s screen
+* For an example account you can use: 
+  * email: ayanna.colden@gmail.com
+  * password: ayanna (this is not a real password to a real emailadress, so don't get your hopes up!)
+  
 
 ### Visuals
 ![ScreenShot](https://raw.github.com/ayanna92/ayannacolden-programmeerproject/master/doc/Screen Shot 2017-02-02 at 11.17.31.png)
