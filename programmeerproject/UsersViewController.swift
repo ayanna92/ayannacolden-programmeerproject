@@ -16,7 +16,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
-    let searchController = UISearchController(searchResultsController: nil)
+    //let searchController = UISearchController(searchResultsController: nil)
 
     var userMessages = [UserMessages]()
     var filteredUser = [UserMessages]()

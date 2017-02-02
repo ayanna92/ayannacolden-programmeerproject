@@ -82,10 +82,7 @@ class MessagesController: UITableViewController {
             
         }, withCancel: nil)
         
-        ref.observe(.childRemoved, with: { (snapshot) in
-            print(snapshot.key)
-            print(self.messagesDictionary)
-            
+        ref.observe(.childRemoved, with: { (snapshot) in            
             self.messagesDictionary.removeValue(forKey: snapshot.key)
             self.attemptReloadOfTable()
             

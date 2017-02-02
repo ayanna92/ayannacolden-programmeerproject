@@ -9,16 +9,16 @@
 import UIKit
 import Firebase
 
-// Source: https://www.youtube.com/watch?v=AsSZulMc7sk
 
 class SignupViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
+    @IBOutlet weak var imageView: UIImageView!
     
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var confirmPwField: UITextField!
-    @IBOutlet weak var imageView: UIImageView!
+
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var selectButton: UIButton!
     
@@ -28,7 +28,7 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-  
+
         self.navigationController?.navigationBar.isHidden = false
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
@@ -51,11 +51,10 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
         
     }
     
-    
     @IBAction func selectImagePressed(_ sender: Any) {
         picker.allowsEditing = true
         picker.sourceType = .photoLibrary
-
+        
         present(picker, animated: true, completion: nil)
     }
     
@@ -63,6 +62,7 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
             self.imageView.image = image
+            print(self.imageView)
             nextButton.isHidden = false
             selectButton.isHidden = true
         }
@@ -70,7 +70,7 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
         
     }
     
-    @IBAction func nextPressed(_ sender: Any) {
+    @IBAction func nexttPressed(_ sender: Any) {
         
         if nameField.text == "" || emailField.text == "" || passwordField.text == "" || confirmPwField.text == "" {
             
@@ -117,9 +117,10 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
                                 // Assign user to firebase.
                                 self.ref.child("users").child(user.uid).setValue(userInfo)
                                 
-                                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "usersVC")
+                                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SWReveal")
                                 
                                 self.present(vc, animated: true, completion: nil)
+
                             }
                         })
                     })
@@ -131,9 +132,10 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
         } else {
             incorrectError()
         }  
-        
-    }
 
+    }
+    
+    
     func emptyError() {
         let errorAlert = UIAlertController(title: "Error", message: "Email and/or password not filled in.", preferredStyle: UIAlertControllerStyle.alert)
         errorAlert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil))
@@ -147,4 +149,25 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         self.present(errorAlert, animated: true, completion: nil)
     }
+    
+    // Keyboard functions:
+    override func keyboardWillShow(notification: NSNotification) {
+        
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0{
+                self.view.frame.origin.y -= keyboardSize.height
+            }
+        }
+        
+    }
+    
+    override func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y != 0{
+                self.view.frame.origin.y += keyboardSize.height
+            }
+        }
+    }
+
+
 }
