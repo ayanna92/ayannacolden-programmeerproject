@@ -8,6 +8,9 @@
 
 import UIKit
 import Firebase
+
+// Source: https://www.letsbuildthatapp.com/course_video?id=402
+
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
     switch (lhs, rhs) {
     case let (l?, r?):
@@ -33,14 +36,11 @@ class MessagesController: UITableViewController {
     
     let cellId = "cellId"
     
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "menu_icon") , style: .plain, target: self.revealViewController(), action: Selector("revealToggle:"))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "menu_icon") , style: .plain, target: self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)))
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.black
         
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
@@ -60,37 +60,6 @@ class MessagesController: UITableViewController {
     }
     
  
-    
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        
-        guard let uid = FIRAuth.auth()?.currentUser?.uid else {
-            return
-        }
-        
-        let message = self.messages[(indexPath as NSIndexPath).row]
-        
-        if let chatPartnerId = message.chatPartnerId() {
-            FIRDatabase.database().reference().child("user-messages").child(uid).child(chatPartnerId).removeValue(completionBlock: { (error, ref) in
-                
-                if error != nil {
-                    print("Failed to delete message:", error)
-                    return
-                }
-                
-                self.messagesDictionary.removeValue(forKey: chatPartnerId)
-                self.attemptReloadOfTable()
-                
-                //                //this is one way of updating the table, but its actually not that safe..
-                //                self.messages.removeAtIndex(indexPath.row)
-                //                self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-                
-            })
-        }
-    }
     
     var messages = [Message]()
     var messagesDictionary = [String: Message]()
@@ -155,53 +124,10 @@ class MessagesController: UITableViewController {
             
             return message1.timestamp?.int32Value > message2.timestamp?.int32Value
         })
-        
-        //this will crash because of background thread, so lets call this on dispatch_async main thread
+
         DispatchQueue.main.async(execute: {
             self.tableView.reloadData()
         })
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return messages.count
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! UserMessageCell
-        
-        let message = messages[(indexPath as NSIndexPath).row]
-        cell.message = message
-        
-        return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = UIColor.clear
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 72
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let message = messages[(indexPath as NSIndexPath).row]
-        
-        guard let chatPartnerId = message.chatPartnerId() else {
-            return
-        }
-        
-        let ref = FIRDatabase.database().reference().child("users").child(chatPartnerId)
-        ref.observeSingleEvent(of: .value, with: { (snapshot) in
-            guard let dictionary = snapshot.value as? [String: AnyObject] else {
-                return
-            }
-            
-            let user = UserMessages()
-            user.uid = chatPartnerId
-            user.setValuesForKeys(dictionary)
-            self.showChatControllerForUser(user)
-            
-        }, withCancel: nil)
     }
     
     func handleNewMessage() {
@@ -210,10 +136,6 @@ class MessagesController: UITableViewController {
         let navController = UINavigationController(rootViewController: newMessageController)
         
         present(navController, animated: true, completion: nil)
-//         self.navigationController?.pushViewController(newMessageController, animated: true)
-        
-        
-        
     }
     
     func checkIfUserIsLoggedIn() {
@@ -224,16 +146,38 @@ class MessagesController: UITableViewController {
         }
     }
     
+    
+    func showChatControllerForUser(_ user: UserMessages) {
+        let chatLogController = ChatController(collectionViewLayout: UICollectionViewFlowLayout())
+        chatLogController.user = user
+        navigationController?.pushViewController(chatLogController, animated: true)
+    }
+    
+    
+    func handleLogout() {
+        
+        do {
+            try FIRAuth.auth()?.signOut()
+        } catch let logoutError {
+            print(logoutError)
+        }
+        
+        
+        let loginController = LoginViewController()
+        loginController.messagesController = self
+        let naviController = UINavigationController(rootViewController: loginController)
+        present(naviController, animated: true, completion: nil)
+    }
+    
+    // MARK: Navigation Bar Functions.
     func fetchUserAndSetupNavBarTitle() {
         guard let uid = FIRAuth.auth()?.currentUser?.uid else {
-            //for some reason uid = nil
             return
         }
         
         FIRDatabase.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
             
             if let dictionary = snapshot.value as? [String: AnyObject] {
-                //                self.navigationItem.title = dictionary["name"] as? String
                 
                 let user = UserMessages()
                 user.setValuesForKeys(dictionary)
@@ -295,48 +239,76 @@ class MessagesController: UITableViewController {
         //        titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatController)))
     }
     
-    func showChatControllerForUser(_ user: UserMessages) {
-        let chatLogController = ChatController(collectionViewLayout: UICollectionViewFlowLayout())
-        chatLogController.user = user
-        navigationController?.pushViewController(chatLogController, animated: true)
+    // MARK: Tableview.
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
-        let chatLogController = ChatController(collectionViewLayout: UICollectionViewFlowLayout())
-        
-        var userMake = (FIRAuth.auth()?.currentUser?.displayName)!
-        var userReceive = (chatLogController.user?.fullname)!
-        print(userMake)
-        
-        let destinationVC = segue.destination as! ContractViewController
-        destinationVC.userMake = userMake
-        destinationVC.userReceive = userReceive
-        
-    }
-    
-    func handleLogout() {
-        
-        do {
-            try FIRAuth.auth()?.signOut()
-        } catch let logoutError {
-            print(logoutError)
+        guard let uid = FIRAuth.auth()?.currentUser?.uid else {
+            return
         }
         
+        let message = self.messages[(indexPath as NSIndexPath).row]
         
-        let loginController = LoginViewController()
-        loginController.messagesController = self
-        let naviController = UINavigationController(rootViewController: loginController)
-        present(naviController, animated: true, completion: nil)
+        if let chatPartnerId = message.chatPartnerId() {
+            FIRDatabase.database().reference().child("user-messages").child(uid).child(chatPartnerId).removeValue(completionBlock: { (error, ref) in
+                
+                if error != nil {
+                    print("Failed to delete message:", error)
+                    return
+                }
+                
+                self.messagesDictionary.removeValue(forKey: chatPartnerId)
+                self.attemptReloadOfTable()
+                
+            })
+        }
     }
     
-    func handleCancel() {
-        dismiss(animated: true, completion: nil)
-        
-//        self.tableView.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-//        self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return messages.count
     }
     
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! UserMessageCell
+        
+        let message = messages[(indexPath as NSIndexPath).row]
+        cell.message = message
+        
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = UIColor.clear
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 72
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let message = messages[(indexPath as NSIndexPath).row]
+        
+        guard let chatPartnerId = message.chatPartnerId() else {
+            return
+        }
+        
+        let ref = FIRDatabase.database().reference().child("users").child(chatPartnerId)
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            guard let dictionary = snapshot.value as? [String: AnyObject] else {
+                return
+            }
+            
+            let user = UserMessages()
+            user.uid = chatPartnerId
+            user.setValuesForKeys(dictionary)
+            self.showChatControllerForUser(user)
+            
+        }, withCancel: nil)
+    }
 }
 
 

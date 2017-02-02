@@ -9,11 +9,14 @@
 import UIKit
 import Firebase
 
+// Inspiration source: https://www.letsbuildthatapp.com/course_video?id=402
+
 class NewMessagesController: UITableViewController {
     
     let cellId = "cellId"
     
     var users = [UserMessages]()
+    var messagesController: MessagesController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,14 +33,10 @@ class NewMessagesController: UITableViewController {
         followingUsers()
         
         tableView.register(UserMessageCell.self, forCellReuseIdentifier: cellId)
-        
-        
     }
     
+    // Retrieving only following users to display.
     func followingUsers() {
-        
-        
-        
         let ref = FIRDatabase.database().reference()
         let uid = FIRAuth.auth()!.currentUser!.uid
         
@@ -86,6 +85,14 @@ class NewMessagesController: UITableViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    func showChatControllerForUser(_ user: UserMessages) {
+        let chatLogController = ChatController(collectionViewLayout: UICollectionViewFlowLayout())
+        chatLogController.user = user
+        navigationController?.popToViewController(chatLogController, animated: true)
+    }
+    
+    
+    // MARK: Tableview.
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return users.count
     }
@@ -112,22 +119,9 @@ class NewMessagesController: UITableViewController {
         return 72
     }
     
-    var messagesController: MessagesController?
-    
-    func showChatControllerForUser(_ user: UserMessages) {
-        let chatLogController = ChatController(collectionViewLayout: UICollectionViewFlowLayout())
-        chatLogController.user = user
-//        present(chatLogController, animated: true, completion: nil)
-        navigationController?.popToViewController(chatLogController, animated: true)
-//        navigationController?.pushViewController(chatLogController, animated: true)
-    }
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         dismiss(animated: true) {
-            print("Dismiss completed")
             let user = self.users[(indexPath as NSIndexPath).row]
-            print(user.fullname)
-//            self.showChatControllerForUser(user)
             self.messagesController?.showChatControllerForUser(user)
         }
     }

@@ -11,8 +11,6 @@ target 'programmeerproject' do
 	pod ‘Firebase/Auth’
 	pod ‘Firebase/Database’
 	pod ‘Firebase/Storage’
-    pod 'JSQMessagesViewController'
-    pod 'GMImagePicker', '~> 0.0.2'
 
   target 'programmeerprojectTests' do
     inherit! :search_paths

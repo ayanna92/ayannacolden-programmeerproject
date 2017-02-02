@@ -11,9 +11,10 @@ import Firebase
 import MobileCoreServices
 import AVFoundation
 
+// Source: https://www.letsbuildthatapp.com/course_video?id=402
+
 class ChatController: UICollectionViewController, UITextFieldDelegate, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    var contractViewController: ContractViewController?
     
     var user: UserMessages? {
         didSet {
@@ -26,6 +27,20 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     var imagePicked = [UIImage]()
     
     var messages = [Message]()
+    
+    let cellId = "cellId"
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        collectionView?.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
+        collectionView?.alwaysBounceVertical = true
+        collectionView?.backgroundColor = UIColor.white
+        collectionView?.register(ChatMessageCell.self, forCellWithReuseIdentifier: cellId)
+        
+        collectionView?.keyboardDismissMode = .interactive
+        setupKeyboardObservers()
+    }
     
     func observeMessages() {
         guard let uid = FIRAuth.auth()?.currentUser?.uid, let toId = user?.uid else {
@@ -57,26 +72,6 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     }
     
     
-    
-    let cellId = "cellId"
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        collectionView?.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
-        //        collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
-        collectionView?.alwaysBounceVertical = true
-        collectionView?.backgroundColor = UIColor.white
-        collectionView?.register(ChatMessageCell.self, forCellWithReuseIdentifier: cellId)
-        
-        collectionView?.keyboardDismissMode = .interactive
-        
-//        let image = UIImage(named: "make_contract_icon")
-//        navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(makeContract))
-        
-        setupKeyboardObservers()
-    }
-    
     // Instruction on how to save/zoom image alert, only shown once.
     override func viewDidAppear(_ animated: Bool) {
         
@@ -97,39 +92,6 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         return chatInputContainerView
     }()
     
-    // Function to go to make contract view.
-//    func makeContract(_ user: UserMessages) {
-//        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "contractVc") as UIViewController
-    
-//        let chatLogController = ChatController(collectionViewLayout: UICollectionViewFlowLayout())
-//        chatLogController.user = user
-//        
-//        
-//        
-//        self.contractViewController?.userMake = (FIRAuth.auth()?.currentUser?.displayName)!
-//        
-//        self.contractViewController?.userReceive = (chatLogController.user?.fullname)!
-//        print(ContractViewController().userMake)
-//        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "sideTable")
-//        performSegue(withIdentifier: "chatContract", sender: self)
-//        navigationController?.pushViewController(vc, animated: true)
-//        //self.present(vc, animated: true, completion: nil)
-//        // performSegue(withIdentifier: "makeContract", sender: present)
-//    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        let chatLogController = ChatController(collectionViewLayout: UICollectionViewFlowLayout())
-        
-        var userMake = (FIRAuth.auth()?.currentUser?.displayName)!
-        var userReceive = (chatLogController.user?.fullname)!
-        print(userMake)
-        
-        let destinationVC = segue.destination as! ContractViewController
-        destinationVC.userMake = userMake
-        destinationVC.userReceive = userReceive
-    
-    }
     
     func handleUploadTap() {
         let imagePickerController = UIImagePickerController()
@@ -159,7 +121,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         let uploadTask = FIRStorage.storage().reference().child("message_movies").child(filename).putFile(url, metadata: nil, completion: { (metadata, error) in
             
             if error != nil {
-                print("Failed upload of video:", error)
+                print("Failed upload of video:", error!)
                 return
             }
             
@@ -234,7 +196,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
             ref.put(uploadData, metadata: nil, completion: { (metadata, error) in
                 
                 if error != nil {
-                    print("Failed to upload image:", error)
+                    print("Failed to upload image:", error!)
                     return
                 }
                 
@@ -244,7 +206,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
                 
                 ref.downloadURL(completion: { (url, error) in
                     if let url = url {
-                        let feed = ["userID": uid,
+                        let feed = ["userID": uid!,
                                     "toId": self.user!.uid!,
                                     "pathToImage": url.absoluteString,
                                     "author": FIRAuth.auth()!.currentUser!.displayName!,
@@ -276,21 +238,6 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         return true
     }
     
-    func setupKeyboardObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidShow), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
-        
-        //        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(handleKeyboardWillShow), name: UIKeyboardWillShowNotification, object: nil)
-        //
-        //        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(handleKeyboardWillHide), name: UIKeyboardWillHideNotification, object: nil)
-    }
-    
-    func handleKeyboardDidShow() {
-        if messages.count > 0 {
-            let indexPath = IndexPath(item: messages.count - 1, section: 0)
-            collectionView?.scrollToItem(at: indexPath, at: .top, animated: true)
-        }
-    }
-    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
@@ -305,55 +252,6 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         UIView.animate(withDuration: keyboardDuration!, animations: {
             self.view.layoutIfNeeded()
         })
-    }
-    
-    func handleKeyboardWillHide(_ notification: Notification) {
-        let keyboardDuration = ((notification as NSNotification).userInfo?[UIKeyboardAnimationDurationUserInfoKey] as AnyObject).doubleValue
-        
-        containerViewBottomAnchor?.constant = 0
-        UIView.animate(withDuration: keyboardDuration!, animations: {
-            self.view.layoutIfNeeded()
-        })
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return messages.count
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ChatMessageCell
-        
-        cell.chatLogController = self
-        
-        let message = messages[(indexPath as NSIndexPath).item]
-        
-        cell.message = message
-        
-        cell.textView.text = message.text
-        
-        setupCell(cell, message: message)
-        
-        if let text = message.text {
-            //a text message
-            cell.bubbleWidthAnchor?.constant = estimateFrameForText(text).width + 32
-            cell.textView.isHidden = false
-        } else if message.imageUrl != nil {
-            //fall in here if its an image message
-            cell.bubbleWidthAnchor?.constant = 200
-            cell.textView.isHidden = true
-            
-//            if self.imagePicked[(indexPath as NSIndexPath).item] != nil {
-//                UIImageWriteToSavedPhotosAlbum(self.imagePicked[(indexPath as NSIndexPath).item], self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
-//            } else {
-//                print("still no image")
-//                // maybe give you must upload photo first alert
-//            }
-            
-        }
-        
-        cell.playButton.isHidden = message.videoUrl == nil
-        
-        return cell
     }
     
     fileprivate func setupCell(_ cell: ChatMessageCell, message: Message) {
@@ -394,27 +292,6 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         collectionView?.collectionViewLayout.invalidateLayout()
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        var height: CGFloat = 80
-        
-        let message = messages[(indexPath as NSIndexPath).item]
-        if let text = message.text {
-            height = estimateFrameForText(text).height + 20
-        } else if let imageWidth = message.imageWidth?.floatValue, let imageHeight = message.imageHeight?.floatValue {
-            
-            // h1 / w1 = h2 / w2
-            // solve for h1
-            // h1 = h2 / w2 * w1
-            
-            height = CGFloat(imageHeight / imageWidth * 200)
-            
-        }
-        
-        let width = UIScreen.main.bounds.width
-        return CGSize(width: width, height: height)
-    }
-    
     fileprivate func estimateFrameForText(_ text: String) -> CGRect {
         let size = CGSize(width: 200, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
@@ -423,6 +300,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     var containerViewBottomAnchor: NSLayoutConstraint?
     
+    // MARK: Sending messages.
     func handleSend() {
         let properties = ["text": inputContainerView.inputTextField.text!]
         sendMessageWithProperties(properties as [String : AnyObject])
@@ -448,7 +326,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
         
         childRef.updateChildValues(values) { (error, ref) in
             if error != nil {
-                print(error)
+                print(error!)
                 return
             }
             
@@ -468,7 +346,7 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
     var blackBackgroundView: UIView?
     var startingImageView: UIImageView?
     
-    //my custom zooming logic
+    // MARK: Zoom logic.
     func performZoomInForStartingImageView(_ startingImageView: UIImageView) {
         
         self.startingImageView = startingImageView
@@ -529,6 +407,81 @@ class ChatController: UICollectionViewController, UITextFieldDelegate, UICollect
                 self.startingImageView?.isHidden = false
             })
         }
+    }
+    
+    // MARK: Keyboard.
+    func setupKeyboardObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidShow), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+    }
+    
+    func handleKeyboardDidShow() {
+        if messages.count > 0 {
+            let indexPath = IndexPath(item: messages.count - 1, section: 0)
+            collectionView?.scrollToItem(at: indexPath, at: .top, animated: true)
+        }
+    }
+    
+    func handleKeyboardWillHide(_ notification: Notification) {
+        let keyboardDuration = ((notification as NSNotification).userInfo?[UIKeyboardAnimationDurationUserInfoKey] as AnyObject).doubleValue
+        
+        containerViewBottomAnchor?.constant = 0
+        UIView.animate(withDuration: keyboardDuration!, animations: {
+            self.view.layoutIfNeeded()
+        })
+    }
+    
+    // MARK: Collectionview.
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return messages.count
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ChatMessageCell
+        
+        cell.chatLogController = self
+        
+        let message = messages[(indexPath as NSIndexPath).item]
+        
+        cell.message = message
+        
+        cell.textView.text = message.text
+        
+        setupCell(cell, message: message)
+        
+        if let text = message.text {
+            //a text message
+            cell.bubbleWidthAnchor?.constant = estimateFrameForText(text).width + 32
+            cell.textView.isHidden = false
+        } else if message.imageUrl != nil {
+            //fall in here if its an image message
+            cell.bubbleWidthAnchor?.constant = 200
+            cell.textView.isHidden = true
+        }
+        
+        cell.playButton.isHidden = message.videoUrl == nil
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        var height: CGFloat = 80
+        
+        let message = messages[(indexPath as NSIndexPath).item]
+        if let text = message.text {
+            height = estimateFrameForText(text).height + 20
+        } else if let imageWidth = message.imageWidth?.floatValue, let imageHeight = message.imageHeight?.floatValue {
+            
+            // h1 / w1 = h2 / w2
+            // solve for h1
+            // h1 = h2 / w2 * w1
+            
+            height = CGFloat(imageHeight / imageWidth * 200)
+            
+        }
+        
+        let width = UIScreen.main.bounds.width
+        return CGSize(width: width, height: height)
     }
 }
 

@@ -11,6 +11,8 @@ import Foundation
 import UIKit
 import Firebase
 
+// Sources: https://www.youtube.com/watch?v=AsSZulMc7sk and https://www.letsbuildthatapp.com/course_video?id=402
+
 let imageCache = NSCache<NSString, UIImage>()
 
 extension UIImageView {
@@ -63,6 +65,23 @@ extension UIViewController
     func dismissKeyboard()
     {
         view.endEditing(true)
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0{
+                self.view.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y != 0{
+                self.view.frame.origin.y += keyboardSize.height
+            }
+        }
     }
 }
 

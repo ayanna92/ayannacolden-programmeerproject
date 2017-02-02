@@ -9,6 +9,8 @@
 import UIKit
 import Firebase
 
+// Source: https://www.youtube.com/watch?v=AsSZulMc7sk
+
 class SignupViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     
@@ -26,9 +28,7 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
+  
         self.navigationController?.navigationBar.isHidden = false
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
@@ -55,8 +55,7 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBAction func selectImagePressed(_ sender: Any) {
         picker.allowsEditing = true
         picker.sourceType = .photoLibrary
-        
-        
+
         present(picker, animated: true, completion: nil)
     }
     
@@ -134,9 +133,7 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
         }  
         
     }
-    
-    
-    
+
     func emptyError() {
         let errorAlert = UIAlertController(title: "Error", message: "Email and/or password not filled in.", preferredStyle: UIAlertControllerStyle.alert)
         errorAlert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil))
@@ -150,25 +147,4 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         self.present(errorAlert, animated: true, completion: nil)
     }
-    
-    // Keyboard functions:
-    func keyboardWillShow(notification: NSNotification) {
-        
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y == 0{
-                self.view.frame.origin.y -= keyboardSize.height
-            }
-        }
-        
-    }
-    
-    func keyboardWillHide(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y != 0{
-                self.view.frame.origin.y += keyboardSize.height
-            }
-        }
-    }
-
-
 }

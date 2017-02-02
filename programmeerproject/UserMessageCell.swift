@@ -9,6 +9,9 @@
 import UIKit
 import Firebase
 
+
+// Source: https://www.letsbuildthatapp.com/course_video?id=402
+
 class UserMessageCell: UITableViewCell {
     
     var message: Message? {
@@ -24,10 +27,10 @@ class UserMessageCell: UITableViewCell {
                 dateFormatter.dateFormat = "hh:mm:ss a"
                 timeLabel.text = dateFormatter.string(from: timestampDate)
             }
-            
-            
         }
     }
+    
+    // MARK: Layout user messages.
     
     fileprivate func setupNameAndProfileImage() {
         

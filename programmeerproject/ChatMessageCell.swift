@@ -9,11 +9,15 @@
 import UIKit
 import AVFoundation
 
+// Source: https://www.letsbuildthatapp.com/course_video?id=402
+
 class ChatMessageCell: UICollectionViewCell {
     
     var message: Message?
     
     var chatLogController: ChatController?
+    
+    // MARK: Layout configurations for user sent videos.
     
     let activityIndicatorView: UIActivityIndicatorView = {
         let aiv = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
@@ -59,6 +63,8 @@ class ChatMessageCell: UICollectionViewCell {
         player?.pause()
         activityIndicatorView.stopAnimating()
     }
+    
+    // MARK: layout configuration chat messages
     
     let textView: UITextView = {
         let tv = UITextView()
@@ -109,12 +115,13 @@ class ChatMessageCell: UICollectionViewCell {
     }()
     
     func imageAction(_ tapGesture: UITapGestureRecognizer) {
-        if let imageView = tapGesture.view as? UIImageView {
+        if (tapGesture.view as? UIImageView) != nil {
           UIImageWriteToSavedPhotosAlbum(messageImageView.image!, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
         }
     }
     
     // Image saved succesfull or error alert.
+    
     func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {
             print(error.localizedDescription)
@@ -136,10 +143,11 @@ class ChatMessageCell: UICollectionViewCell {
         }
         
         if let imageView = tapGesture.view as? UIImageView {
-            //PRO Tip: don't perform a lot of custom logic inside of a view class
             self.chatLogController?.performZoomInForStartingImageView(imageView)
         }
     }
+    
+    // MARK: Layout subviews.
     
     var bubbleWidthAnchor: NSLayoutConstraint?
     var bubbleViewRightAnchor: NSLayoutConstraint?
@@ -185,8 +193,6 @@ class ChatMessageCell: UICollectionViewCell {
         bubbleViewRightAnchor?.isActive = true
         
         bubbleViewLeftAnchor = bubbleView.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 8)
-        //        bubbleViewLeftAnchor?.active = false
-        
         
         bubbleView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         

@@ -8,6 +8,8 @@
 
 import UIKit
 
+// Source: https://www.letsbuildthatapp.com/course_video?id=402
+
 class ChatInputContainerView: UIView, UITextFieldDelegate {
     
     weak var chatLogController: ChatController? {

@@ -9,6 +9,8 @@
 import UIKit
 import Firebase
 
+// Source: https://www.youtube.com/watch?v=AsSZulMc7sk
+
 class LoginViewController: UIViewController {
 
     @IBOutlet weak var emailField: UITextField!
@@ -27,9 +29,6 @@ class LoginViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-
-        
-//        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "images")?.draw(at: CGPoint.zero, blendMode: .normal, alpha: 0.5))
         
         let image = UIImage(named: "images-2")
         let transparentImage = image?.image(alpha: 0.5)
@@ -69,25 +68,6 @@ class LoginViewController: UIViewController {
         
         self.present(errorAlert, animated: true, completion: nil)
         
-    }
-    
-    // Keyboard functions:
-    func keyboardWillShow(notification: NSNotification) {
-        
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y == 0{
-                self.view.frame.origin.y -= keyboardSize.height
-            }
-        }
-        
-    }
-    
-    func keyboardWillHide(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y != 0{
-                self.view.frame.origin.y += keyboardSize.height
-            }
-        }
     }
 
 }

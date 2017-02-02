@@ -9,6 +9,8 @@
 import UIKit
 import Firebase
 
+// Inspiration source: https://www.youtube.com/watch?v=fw7ySRFtX_M
+
 class FeedViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
     
@@ -30,14 +32,20 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         fetchWithProfile()
         
         open.target = self.revealViewController()
-        open.action = Selector("revealToggle:")
+        open.action = #selector(SWRevealViewController.revealToggle(_:))
         
-        self.collectionView.backgroundColor = UIColor.groupTableViewBackground
+        self.collectionView.backgroundColor = UIColor.black
         
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
     }
     
-
+    /**
+        Firebase structure.
+        
+        Retrieves profile images sender from "users", images from message_images, uses id's from message_images
+        to retrieve full names and profile images from users displayed in feed.
+     */
+    
     func fetchWithProfile() {
         
         let ref = FIRDatabase.database().reference()
@@ -58,9 +66,7 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
                             if let dictionary = snaps.value as? [String: AnyObject] {
                                 
                                 if let userID = dictionary["userID"] as? String, let toId = dictionary["toId"] as? String{
-                                    print("toid: \(toId)")
-                                    
-                                    
+
                                     let userToShow = UserMessages()
                                     
                                     userToShow.uid = toId
@@ -105,14 +111,12 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     }
 
-    
+    // MARK: Collectionview.
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("count:\(self.posts.count)")
-        print("user.count:\(self.userMessages.count)")
         return self.posts.count
     }
     
@@ -129,6 +133,4 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         return cell
     }
-
-
 }
