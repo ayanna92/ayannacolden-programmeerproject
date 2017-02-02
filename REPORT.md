@@ -3,7 +3,7 @@
 
 Mutually assured destruction (M.A.D.) is a social media app, which focuses on the sharing of embarrassing photos between friends. The idea is to have a safe platform for friends to enjoy embarrassing photos they’ve made of one another without it being displayed on bigger social media platforms such as facebook/twitter/instagram etc. M.A.D.’s newsfeed therefore only contains images that users have sent themselves or images that they’ve personally received. 
 
-![ScreenShot](https://raw.github.com/ayanna92/ayannacolden-programmeerproject/master/doc/Screen Shot 2017-02-02 at 11.17.59.png)
+![ScreenShot](https://raw.github.com/ayanna92/ayannacolden-programmeerproject/master/doc/Screen Shot 2017-02-02 at 16.13.05.png)
 
 ## Firebase data structure
 ![ScreenShot](https://raw.github.com/ayanna92/ayannacolden-programmeerproject/master/doc/Screen Shot 2017-02-02 at 15.51.27.png) ![ScreenShot](https://raw.github.com/ayanna92/ayannacolden-programmeerproject/master/doc/Screen Shot 2017-02-02 at 15.52.06.png) ![ScreenShot](https://raw.github.com/ayanna92/ayannacolden-programmeerproject/master/doc/Screen Shot 2017-02-02 at 15.53.36.png) ![ScreenShot](https://raw.github.com/ayanna92/ayannacolden-programmeerproject/master/doc/Screen Shot 2017-02-02 at 15.54.10.png)
