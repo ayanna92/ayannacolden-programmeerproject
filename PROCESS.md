@@ -80,3 +80,11 @@
 ## Day 22 (Mon): 
 * Finally worked out how to retrieve who photos are sent to from firebase and put it in my newsfeed
 * Now going to make newsfeed look pretty, because it is very plain atm.
+* By resizing images and adding a seperator
+
+## Day 23 (Tue):
+* Trying to implement searchbar into usersviewcontroller, so you can search users
+* However this if giving me problems with follow/unfollowing of users, and an index out of range issue!
+* Making last attempts of fixing this problem by asking for assistence tonight and tomorrow morning. If not I'll have to sadly scrap it and get back to code cleanup and writing of report/editing proposal etc. Enough left to do. 
+
+
