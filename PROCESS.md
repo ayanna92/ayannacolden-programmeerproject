@@ -94,3 +94,8 @@
 
 ## Day 25 (Thu):
 * Finally writing report, editing readme, and cleaning up code. Also need to add sourced to readme and code, and need to seriously get on writing comments. Wish I had been more alert doing this while writing code, but not much to be done about that now. 
+* Had unexpected crash in signup view, which I managed to fix just in time
+* Cleaned up code
+* Wrote, report and adjusted readme, added license 
+* Checked if project worked when downloading
+* Time to get some rest now.
