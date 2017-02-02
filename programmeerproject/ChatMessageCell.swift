@@ -129,7 +129,6 @@ class ChatMessageCell: UICollectionViewCell {
             ac.addAction(UIAlertAction(title: "OK", style: .default))
             self.chatLogController?.present(ac, animated: true)
         } else {
-            print("saved")
             let ac = UIAlertController(title: "Saved!", message: "This image has been saved to your photos.", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK", style: .default))
             self.chatLogController?.present(ac, animated: true)
